@@ -1,0 +1,161 @@
+/* =========================================================
+   era-01-prasejarah.js — Data Cerita Era 1: Pra Sejarah
+   Jejak Sejarah Nusantara
+   ========================================================= */
+
+window.ERA_DATA = window.ERA_DATA || {};
+
+window.ERA_DATA.era01 = {
+  id: "era01",
+  judul: "Pra Sejarah",
+  periode: "± 1.000.000 SM – 300 M",
+  ikon: "🪨",
+  warna: "#8a7a5c",
+  musik: "assets/audio/bgm/era-01.mp3",
+
+  bab: [
+    /* ==================== BAB 1 ==================== */
+    {
+      id: "bab1",
+      judul: "Jejak di Tepi Sungai",
+      ringkas: "Menelusuri lapisan tanah Sangiran tempat manusia purba pernah hidup.",
+      latar: "assets/img/era-01/bab1-sangiran.jpg",
+
+      adegan: [
+        /* --- 1. Narasi Pembuka --- */
+        {
+          t: "narasi",
+          judul: "Kronik Retak",
+          teks:
+            "Kamu membuka <em>Kronik Nusantara</em> untuk pertama kalinya. " +
+            "Halamannya kosong — hanya debu dan satu kalimat samar: " +
+            "<em>\"Semua bermula dari tanah.\"</em><br><br>" +
+            "Cahaya keemasan menyala di sebelahmu. Arunika muncul, wajahnya gelisah.<br><br>" +
+            "<strong>\"Penjelajah, pecahan pertama hilang. Kita harus ke Sangiran — " +
+            "kira-kira satu juta tahun ke belakang.\"</strong>"
+        },
+
+        /* --- 2. Dialog Arunika --- */
+        {
+          t: "dialog",
+          npc: "Arunika",
+          emoji: "✨",
+          teks:
+            "Kamu akan berdiri di lapisan tanah yang berumur ratusan ribu tahun. " +
+            "Ingat: <strong>jangan sentuh apa pun sebelum kamu memahaminya.</strong> " +
+            "Sejarah tidak suka tangan yang tergesa-gesa."
+        },
+
+        /* --- 3. Eksplorasi --- */
+        {
+          t: "eksplor",
+          latar: "assets/img/era-01/bab1-eksplor.jpg",
+          instruksi:
+            "Kamu berada di dasar lapisan tanah Sangiran. Periksa setiap lapisan " +
+            "untuk menemukan jejak yang ditinggalkan.",
+          hotspot: [
+            {
+              x: 24, y: 62,
+              judul: "Lapisan Tanah Hitam",
+              teks:
+                "Lapisan ini disebut <strong>lapisan lempung hitam</strong> dari zaman Pleistosen. " +
+                "Umurnya sekitar 1,5 juta tahun. Di sinilah banyak fosil ditemukan.",
+              efek: { kodeks: ["pleistosen"], poin: 10 }
+            },
+            {
+              x: 55, y: 40,
+              judul: "Fragmen Tengkorak",
+              teks:
+                "Sebuah atap tengkorak dengan tonjolan kening tebal. Ini ciri " +
+                "<strong>Pithecanthropus erectus</strong> — ditemukan Eugene Dubois " +
+                "di Trinil (1891), lalu fosil serupa muncul di Sangiran.",
+              efek: { kodeks: ["pithecanthropus"], poin: 15 }
+            },
+            {
+              x: 76, y: 72,
+              judul: "Alat dari Batu",
+              teks:
+                "Sebuah batu pecah dengan sisi tajam. Ini <strong>kapak genggam</strong> — " +
+                "alat serbaguna manusia purba untuk memotong, menguliti, dan menggali.",
+              efek: { kodeks: ["kapak-genggam"], poin: 15 }
+            }
+          ]
+        },
+
+        /* --- 4. Kuis --- */
+        {
+          t: "kuis",
+          pertanyaan:
+            "Mengapa Sangiran sangat penting bagi ilmu pengetahuan dunia?",
+          opsi: [
+            "Karena letaknya dekat dengan ibu kota provinsi.",
+            "Karena menjadi salah satu situs penemuan fosil manusia purba terbanyak di dunia.",
+            "Karena di sana ditemukan emas dan perak.",
+            "Karena Sangiran adalah bekas kerajaan besar."
+          ],
+          jawaban: 1,
+          penjelasan:
+            "Benar. Sangiran diakui UNESCO sebagai <em>World Heritage Site</em> (1996) " +
+            "karena menyimpan lebih dari 100 fosil manusia purba dari berbagai lapisan zaman — " +
+            "menjadikannya salah satu situs kunci dalam studi evolusi manusia.",
+          efek: { kodeks: ["sangiran"] }
+        },
+
+        /* --- 5. Pilihan (dilema) --- */
+        {
+          t: "pilihan",
+          teks:
+            "Seorang penduduk desa menemukan fosil tak biasa di kebunnya. " +
+            "Ia bingung harus berbuat apa. Apa yang akan kamu sarankan?",
+          opsi: [
+            {
+              teks: "Menyarankan melaporkan ke Balai Pelestarian Situs Manusia Purba.",
+              benar: true,
+              umpanBalik:
+                "Tepat. Fosil harus diteliti di laboratorium agar umur dan jenisnya bisa " +
+                "diketahui secara ilmiah. Ini yang terjadi pada temuan-temuan besar di Sangiran.",
+              efek: { poin: 20, empati: 5, flag: ["menghargai-situs"] }
+            },
+            {
+              teks: "Menyarankan menyimpannya sendiri sebagai koleksi pribadi.",
+              benar: false,
+              umpanBalik:
+                "Anomali terdeteksi. Fosil tanpa konteks lapisan tanahnya kehilangan sebagian besar " +
+                "nilai ilmiahnya. Selain itu, situs purbakala dilindungi undang-undang."
+            },
+            {
+              teks: "Menyarankan menjualnya ke kolektor.",
+              benar: false,
+              umpanBalik:
+                "Anomali terdeteksi. Ini tindakan ilegal dan merusak warisan bersama."
+            }
+          ]
+        },
+
+        /* --- 6. Refleksi --- */
+        {
+          t: "refleksi",
+          pertanyaan:
+            "Bayangkan kamu hidup 500.000 tahun lalu. Apa satu hal paling sulit dalam hidupmu, " +
+            "dan apa yang paling kamu syukuri?",
+          minKarakter: 60,
+          respons:
+            "Terima kasih. Memahami kesulitan orang lain di masa lalu adalah langkah pertama " +
+            "untuk memahami sejarah."
+        },
+
+        /* --- 7. Tutup Bab --- */
+        {
+          t: "tutup",
+          judul: "Jejak di Tepi Sungai",
+          teks:
+            "Pecahan pertama bersinar di tanganmu. Arunika mengangguk. " +
+            "<em>\"Satu langkah selesai. Tapi masih ada sembilan zaman menanti.\"</em>",
+          efek: { poin: 25 }
+        }
+      ]
+    }
+
+    /* Bab 2, 3, 4 akan ditambahkan nanti setelah Bab 1 berhasil diuji */
+  ]
+};

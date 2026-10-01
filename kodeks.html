@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#08090c" />
+<title>Kodeks — Jejak Sejarah Nusantara</title>
+<meta name="description" content="Ensiklopedia sejarah Indonesia: tokoh, tempat, istilah, dan artefak yang telah kamu temukan." />
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/ui.css" />
+
+<style>
+:root {
+  --ln-bg-0: #08090c; --ln-bg-2: #131720; --ln-bg-3: #1a1f2b;
+  --ln-ink: #eef0f4; --ln-ink-2: #9ba3b4; --ln-ink-3: #5a6073;
+  --ln-gold: #d4af37; --ln-gold-2: #f7d97a; --ln-gold-3: #a3801c;
+  --ln-teal: #4fd1c5; --ln-rose: #e85a71; --ln-violet: #8b5cf6;
+  --ln-line: rgba(255,255,255,.07); --ln-line-2: rgba(255,255,255,.12);
+  --ln-glass: rgba(255,255,255,.03); --ln-glass-2: rgba(255,255,255,.06);
+  --ln-r: 18px; --ln-r-lg: 28px;
+  --ln-font-display: "Fraunces", Georgia, serif;
+  --ln-font-body: "Inter", system-ui, sans-serif;
+  --ln-font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --ln-lebar: 1240px; --ln-nav-h: 68px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+body {
+  background: var(--ln-bg-0); color: var(--ln-ink);
+  font-family: var(--ln-font-body); font-size: 16px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh;
+}
+img { max-width: 100%; display: block; }
+button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--ln-gold); color: #1a1500; }
+
+/* LOADER */
+#loader {
+  position: fixed; inset: 0; z-index: 10000; background: var(--ln-bg-0);
+  display: grid; place-items: center;
+  transition: opacity .5s ease, visibility .5s ease;
+}
+#loader.selesai { opacity: 0; visibility: hidden; }
+.loader-emblem {
+  width: 60px; height: 60px; position: relative; margin-bottom: 20px;
+}
+.loader-emblem::before, .loader-emblem::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--ln-gold); border-right-color: var(--ln-gold-2);
+  animation: spin 1.4s linear infinite;
+}
+.loader-emblem::after {
+  inset: 10px; border-top-color: var(--ln-teal);
+  border-right-color: transparent;
+  animation-direction: reverse; animation-duration: 2s;
+}
+.loader-emblem span {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 1.5rem; animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+.loader-isi { display: flex; flex-direction: column; align-items: center; }
+.loader-teks {
+  font-family: var(--ln-font-mono); font-size: .72rem;
+  letter-spacing: .3em; text-transform: uppercase; color: var(--ln-ink-3);
+}
+
+/* CURSOR */
+.cursor-dot, .cursor-ring {
+  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+  border-radius: 50%; transform: translate(-50%, -50%); opacity: 0;
+  transition: opacity .3s ease; mix-blend-mode: difference;
+}
+.cursor-dot { width: 6px; height: 6px; background: var(--ln-gold); transition: opacity .3s ease, transform .12s ease; }
+.cursor-ring {
+  width: 34px; height: 34px; border: 1.5px solid var(--ln-gold);
+  transition: opacity .3s, transform .25s, width .3s, height .3s, border-color .3s;
+}
+.cursor-ring.hover { width: 56px; height: 56px; border-color: var(--ln-teal); background: rgba(79,209,197,.08); }
+body.cursor-aktif .cursor-dot, body.cursor-aktif .cursor-ring { opacity: 1; }
+@media (hover: none), (max-width: 900px) { .cursor-dot, .cursor-ring { display: none !important; } }
+
+/* SCROLL PROGRESS */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+  background: linear-gradient(90deg, var(--ln-gold), var(--ln-gold-2), var(--ln-teal));
+  z-index: 9500; transition: width .1s linear;
+}
+
+/* PARTIKEL */
+#partikel { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .35; }
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 2; pointer-events: none;
+  opacity: .035; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* NAV */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+  height: var(--ln-nav-h); display: flex; align-items: center;
+  transition: all .4s cubic-bezier(.4,0,.2,1);
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+  background: rgba(8,9,12,.72);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom-color: var(--ln-line); height: 60px;
+}
+.nav-wadah {
+  width: min(100% - 40px, var(--ln-lebar));
+  margin-inline: auto; display: flex; align-items: center;
+  justify-content: space-between; gap: 20px;
+}
+.nav-logo { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+.nav-logo:hover { transform: scale(1.03); }
+.nav-logo-ikon {
+  width: 38px; height: 38px; display: grid; place-items: center;
+  font-size: 1.15rem; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(212,175,55,.2), rgba(212,175,55,.05));
+  border: 1px solid rgba(212,175,55,.35);
+}
+.nav-logo-teks { display: flex; flex-direction: column; line-height: 1.1; }
+.nav-logo-teks strong { font-family: var(--ln-font-display); font-size: 1rem; letter-spacing: -.02em; }
+.nav-logo-teks small {
+  font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ln-gold); font-weight: 600; margin-top: 2px;
+}
+.nav-aksi { display: flex; align-items: center; gap: 6px; }
+.nav-ikon-btn {
+  width: 40px; height: 40px; display: grid; place-items: center;
+  border-radius: 12px; background: var(--ln-glass);
+  border: 1px solid var(--ln-line); font-size: 1.05rem;
+  color: var(--ln-ink-2); transition: all .25s ease; position: relative;
+}
+.nav-ikon-btn:hover {
+  background: var(--ln-glass-2); border-color: var(--ln-gold);
+  color: var(--ln-gold-2); transform: translateY(-2px);
+}
+.nav-ikon-btn.aktif {
+  background: rgba(212,175,55,.15);
+  border-color: var(--ln-gold); color: var(--ln-gold-2);
+}
+.nav-ikon-btn .badge {
+  position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px;
+  padding: 0 5px; border-radius: 100px;
+  background: var(--ln-gold); color: #1a1500;
+  font-family: var(--ln-font-mono); font-size: .62rem; font-weight: 700;
+  display: grid; place-items: center; border: 2px solid var(--ln-bg-0);
+}
+@media (max-width: 720px) { .nav-ikon-btn.opsional { display: none; } }
+
+/* LAYOUT */
+.wadah-ln { width: min(100% - 40px, var(--ln-lebar)); margin-inline: auto; position: relative; z-index: 5; }
+@media (max-width: 640px) { .wadah-ln { width: calc(100% - 28px); } }
+
+/* HEADER */
+.header-kodeks {
+  padding: calc(var(--ln-nav-h) + 40px) 0 40px;
+  position: relative;
+}
+.header-kodeks::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 400px;
+  background:
+    radial-gradient(ellipse 50% 60% at 20% 0%, rgba(79,209,197,.12), transparent 60%),
+    radial-gradient(ellipse 40% 50% at 80% 10%, rgba(212,175,55,.12), transparent 60%);
+  filter: blur(50px); pointer-events: none; z-index: 0;
+}
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--ln-font-mono); font-size: .68rem;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: var(--ln-gold); font-weight: 500;
+  padding: 6px 14px; border-radius: 100px;
+  background: rgba(212,175,55,.06); border: 1px solid rgba(212,175,55,.2);
+}
+.eyebrow::before {
+  content: ""; width: 5px; height: 5px; background: var(--ln-gold);
+  border-radius: 50%; box-shadow: 0 0 10px var(--ln-gold);
+  animation: titikDenyut 2s ease-in-out infinite;
+}
+@keyframes titikDenyut {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .4; transform: scale(.7); }
+}
+
+.header-kodeks h1 {
+  font-family: var(--ln-font-display);
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  font-weight: 800; line-height: 1.15;
+  letter-spacing: -.025em; margin: 18px 0 10px;
+}
+.header-kodeks h1 em {
+  font-style: italic;
+  background: linear-gradient(180deg, var(--ln-gold-2), var(--ln-gold-3));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.header-kodeks p {
+  max-width: 560px; font-size: .98rem;
+  line-height: 1.7; color: var(--ln-ink-2);
+}
+
+/* PROGRESS KODEKS */
+.kodeks-progress {
+  margin-top: 32px; padding: 24px 26px;
+  border-radius: var(--ln-r-lg);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(79,209,197,.08), transparent 50%),
+    linear-gradient(160deg, rgba(19,23,32,.85), rgba(13,15,20,.95));
+  border: 1px solid var(--ln-line); position: relative; z-index: 1;
+}
+.kodeks-progress-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.kodeks-progress-head .label {
+  display: flex; align-items: center; gap: 12px;
+}
+.kodeks-progress-head .ikon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: grid; place-items: center; font-size: 1.1rem;
+  background: linear-gradient(135deg, rgba(79,209,197,.2), rgba(79,209,197,.04));
+  border: 1px solid rgba(79,209,197,.3);
+}
+.kodeks-progress-head h3 {
+  font-family: var(--ln-font-display); font-size: 1.05rem; font-weight: 700;
+}
+.kodeks-progress-head .sub {
+  font-family: var(--ln-font-mono); font-size: .65rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ln-ink-3); margin-top: 2px;
+}
+.kodeks-persen {
+  font-family: var(--ln-font-display); font-size: 1.8rem;
+  font-weight: 800; line-height: 1; letter-spacing: -.03em;
+  background: linear-gradient(180deg, var(--ln-gold-2), var(--ln-gold-3));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.kodeks-track {
+  height: 8px; border-radius: 100px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--ln-line); overflow: hidden;
+}
+.kodeks-isi {
+  height: 100%; width: 0%; border-radius: 100px;
+  background: linear-gradient(90deg, var(--ln-teal), var(--ln-gold), var(--ln-gold-2));
+  box-shadow: 0 0 20px rgba(212,175,55,.4);
+  transition: width 1.2s cubic-bezier(.22,1,.36,1);
+  position: relative;
+}
+.kodeks-isi::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+  animation: shineK 2.4s ease-in-out infinite;
+}
+@keyframes shineK { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
+
+/* TOOLBAR */
+.toolbar {
+  display: flex; flex-direction: column; gap: 14px;
+  margin: 40px 0 28px; position: relative; z-index: 5;
+}
+.search-box {
+  position: relative;
+  display: flex; align-items: center;
+}
+.search-box .ikon {
+  position: absolute; left: 18px; font-size: 1rem;
+  color: var(--ln-ink-3); pointer-events: none;
+}
+.search-box input {
+  width: 100%; padding: 14px 20px 14px 48px;
+  border-radius: 100px; background: var(--ln-glass);
+  border: 1px solid var(--ln-line);
+  color: var(--ln-ink); font: inherit; font-size: .95rem;
+  transition: all .25s ease;
+}
+.search-box input::placeholder { color: var(--ln-ink-3); }
+.search-box input:focus {
+  outline: none; border-color: var(--ln-gold);
+  background: var(--ln-glass-2);
+  box-shadow: 0 0 0 4px rgba(212,175,55,.1);
+}
+.search-box .clear {
+  position: absolute; right: 16px;
+  width: 26px; height: 26px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--ln-glass-2); color: var(--ln-ink-2);
+  font-size: .8rem; transition: all .2s ease;
+}
+.search-box .clear:hover { background: var(--ln-gold); color: #1a1500; }
+
+.filter-row {
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap;
+}
+.filter-label {
+  font-family: var(--ln-font-mono); font-size: .68rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ln-ink-3); font-weight: 500;
+  margin-right: 6px;
+}
+.filter-chip {
+  padding: 7px 15px; border-radius: 100px;
+  font-size: .82rem; font-weight: 600;
+  color: var(--ln-ink-2); background: var(--ln-glass);
+  border: 1px solid var(--ln-line);
+  transition: all .25s ease;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.filter-chip:hover { color: var(--ln-ink); border-color: var(--ln-line-2); }
+.filter-chip.aktif {
+  background: linear-gradient(135deg, var(--ln-gold), var(--ln-gold-2));
+  color: #1a1500; border-color: var(--ln-gold);
+  box-shadow: 0 6px 18px -6px rgba(212,175,55,.5);
+}
+.filter-chip .jml {
+  font-family: var(--ln-font-mono); font-size: .68rem;
+  padding: 1px 6px; border-radius: 100px;
+  background: rgba(0,0,0,.15);
+}
+.filter-chip:not(.aktif) .jml { background: var(--ln-glass-2); color: var(--ln-ink-3); }
+
+@media (max-width: 640px) {
+  .filter-row { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .filter-chip { white-space: nowrap; }
+}
+
+/* HASIL INFO */
+.hasil-info {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px; padding: 12px 20px;
+  border-radius: 100px; background: var(--ln-glass);
+  border: 1px solid var(--ln-line);
+  font-size: .82rem; color: var(--ln-ink-2);
+}
+.hasil-info strong { color: var(--ln-gold-2); }
+.hasil-info .urut {
+  display: flex; align-items: center; gap: 8px;
+}
+.hasil-info select {
+  padding: 6px 12px; border-radius: 100px;
+  background: var(--ln-glass-2); border: 1px solid var(--ln-line);
+  color: var(--ln-ink); font: inherit; font-size: .78rem;
+  cursor: pointer;
+}
+.hasil-info select:focus { outline: none; border-color: var(--ln-gold); }
+
+/* GRID KODEKS */
+.kodeks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  padding-bottom: 80px;
+}
+@media (max-width: 640px) {
+  .kodeks-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+}
+
+.kartu-kodeks {
+  position: relative;
+  border-radius: var(--ln-r);
+  background: linear-gradient(160deg, rgba(19,23,32,.85), rgba(13,15,20,.95));
+  border: 1px solid var(--ln-line);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all .35s cubic-bezier(.4,0,.2,1);
+  display: flex; flex-direction: column;
+}
+.kartu-kodeks::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 0%, var(--kodeks-warna, #d4af37), transparent 55%);
+  opacity: 0; transition: opacity .4s ease;
+  mix-blend-mode: soft-light; pointer-events: none;
+}
+.kartu-kodeks:not(.terkunci):hover {
+  transform: translateY(-6px);
+  border-color: var(--kodeks-warna, #d4af37);
+  box-shadow: 0 20px 50px -18px rgba(0,0,0,.8);
+}
+.kartu-kodeks:not(.terkunci):hover::before { opacity: .25; }
+.kartu-kodeks.terkunci {
+  opacity: .55; cursor: not-allowed;
+  filter: grayscale(.85);
+}
+.kartu-kodeks.terkunci::after {
+  content: "🔒";
+  position: absolute; top: 12px; right: 12px;
+  font-size: 1rem;
+  background: rgba(0,0,0,.5);
+  width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center;
+}
+
+.kartu-kodeks-media {
+  aspect-ratio: 4/3;
+  display: grid; place-items: center;
+  font-size: 3.2rem;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255,255,255,.06), transparent 60%),
+    linear-gradient(160deg, rgba(255,255,255,.03), transparent);
+  border-bottom: 1px solid var(--ln-line);
+  position: relative;
+  overflow: hidden;
+}
+.kartu-kodeks.terkunci .kartu-kodeks-media {
+  font-size: 2.2rem;
+  color: var(--ln-ink-3);
+}
+.kartu-kodeks-media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,.05) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform .8s ease;
+}
+.kartu-kodeks:not(.terkunci):hover .kartu-kodeks-media::after { transform: translateX(100%); }
+
+.kartu-kodeks-body {
+  padding: 16px 18px 18px;
+  display: flex; flex-direction: column; gap: 6px;
+  flex: 1;
+}
+.kartu-kodeks-kategori {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--ln-font-mono); font-size: .62rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--ln-ink-3); font-weight: 500;
+  align-self: flex-start;
+}
+.kartu-kodeks-kategori .dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--kodeks-warna, #d4af37);
+}
+.kartu-kodeks h3 {
+  font-family: var(--ln-font-display);
+  font-size: 1rem; font-weight: 700;
+  letter-spacing: -.01em; line-height: 1.25;
+  margin: 0;
+}
+.kartu-kodeks p {
+  font-size: .8rem; color: var(--ln-ink-2);
+  line-height: 1.55; margin: 2px 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.kartu-kodeks.terkunci h3,
+.kartu-kodeks.terkunci p,
+.kartu-kodeks.terkunci .kartu-kodeks-kategori { visibility: hidden; }
+.kartu-kodeks.terkunci .kartu-kodeks-body::before {
+  content: "Belum ditemukan";
+  position: absolute;
+  left: 18px; right: 18px;
+  font-family: var(--ln-font-mono); font-size: .72rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--ln-ink-3); text-align: center;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  padding: 80px 24px; text-align: center;
+  border-radius: var(--ln-r-lg);
+  border: 1px dashed var(--ln-line);
+  color: var(--ln-ink-3);
+  grid-column: 1 / -1;
+}
+.empty-state .ikon {
+  font-size: 3rem; margin-bottom: 16px;
+  opacity: .5;
+}
+.empty-state h3 {
+  font-family: var(--ln-font-display); font-size: 1.2rem;
+  color: var(--ln-ink-2); margin-bottom: 8px;
+}
+.empty-state p { font-size: .9rem; max-width: 380px; margin: 0 auto; }
+
+/* MODAL DETAIL */
+.modal-detail {
+  position: fixed; inset: 0; z-index: 9500;
+  background: rgba(5,7,10,.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: grid; place-items: center;
+  padding: 20px;
+  animation: fadeInModal .25s ease both;
+}
+@keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-detail-isi {
+  background: linear-gradient(160deg, rgba(19,23,32,.98), rgba(13,15,20,.99));
+  border: 1px solid var(--ln-line-2);
+  border-radius: var(--ln-r-lg);
+  width: min(100%, 680px);
+  max-height: 88vh; overflow-y: auto;
+  box-shadow: 0 40px 100px -20px rgba(0,0,0,.9);
+  animation: slideUp .35s cubic-bezier(.22,1,.36,1) both;
+  position: relative;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px) scale(.97); }
+  to { opacity: 1; transform: none; }
+}
+
+.modal-detail-tutup {
+  position: absolute; top: 16px; right: 16px;
+  width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(0,0,0,.5);
+  border: 1px solid var(--ln-line-2);
+  color: var(--ln-ink-2); font-size: 1rem;
+  transition: all .25s ease; z-index: 2;
+}
+.modal-detail-tutup:hover {
+  background: var(--ln-gold); color: #1a1500;
+  transform: rotate(90deg);
+}
+
+.modal-detail-header {
+  padding: 36px 32px 24px;
+  border-bottom: 1px solid var(--ln-line);
+  display: flex; align-items: flex-start; gap: 20px;
+}
+.modal-detail-ikon {
+  width: 72px; height: 72px; border-radius: 20px;
+  display: grid; place-items: center; font-size: 2.2rem;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(212,175,55,.25), transparent 60%),
+    linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border: 1px solid var(--ln-line-2);
+  flex-shrink: 0;
+}
+.modal-detail-judul { min-width: 0; flex: 1; }
+.modal-detail-kategori {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--ln-font-mono); font-size: .65rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ln-gold); font-weight: 500;
+  padding: 4px 10px; border-radius: 100px;
+  background: rgba(212,175,55,.08);
+  border: 1px solid rgba(212,175,55,.25);
+  margin-bottom: 10px;
+}
+.modal-detail-judul h2 {
+  font-family: var(--ln-font-display);
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  font-weight: 800; letter-spacing: -.02em;
+  line-height: 1.2; margin: 0;
+}
+.modal-detail-judul .zaman {
+  font-family: var(--ln-font-mono); font-size: .7rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ln-ink-3); margin-top: 8px;
+}
+
+.modal-detail-body {
+  padding: 28px 32px 32px;
+  display: flex; flex-direction: column; gap: 22px;
+}
+.modal-detail-ringkas {
+  font-family: var(--ln-font-display);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--ln-gold-2);
+  line-height: 1.55;
+  padding-left: 16px;
+  border-left: 3px solid var(--ln-gold);
+}
+.modal-detail-isi {
+  font-size: .98rem; line-height: 1.8;
+  color: var(--ln-ink); 
+}
+.modal-detail-isi p { margin: 0 0 12px; }
+.modal-detail-isi p:last-child { margin-bottom: 0; }
+
+.modal-detail-fakta {
+  padding: 20px; border-radius: var(--ln-r);
+  background: rgba(79,209,197,.04);
+  border: 1px solid rgba(79,209,197,.2);
+}
+.modal-detail-fakta h4 {
+  font-family: var(--ln-font-mono); font-size: .68rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ln-teal); font-weight: 600; margin-bottom: 12px;
+}
+.modal-detail-fakta ul {
+  list-style: none; padding: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.modal-detail-fakta li {
+  font-size: .88rem; color: var(--ln-ink);
+  padding-left: 22px; position: relative; line-height: 1.6;
+}
+.modal-detail-fakta li::before {
+  content: "◆";
+  position: absolute; left: 0;
+  color: var(--ln-teal); font-size: .6rem; top: .45em;
+}
+
+.modal-detail-sumber {
+  padding-top: 20px;
+  border-top: 1px solid var(--ln-line);
+  font-size: .82rem; color: var(--ln-ink-3);
+}
+.modal-detail-sumber strong {
+  font-family: var(--ln-font-mono); font-size: .68rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ln-ink-2); font-weight: 500;
+  display: block; margin-bottom: 6px;
+}
+
+@media (max-width: 640px) {
+  .modal-detail-header { padding: 28px 20px 20px; gap: 14px; }
+  .modal-detail-ikon { width: 56px; height: 56px; font-size: 1.6rem; }
+  .modal-detail-body { padding: 20px; gap: 18px; }
+  .modal-detail-judul h2 { font-size: 1.25rem; }
+}
+
+/* TOAST */
+#toast-wadah {
+  position: fixed; left: 50%; bottom: 28px;
+  transform: translateX(-50%); z-index: 9999;
+  display: flex; flex-direction: column; gap: 10px;
+  width: min(92vw, 400px); pointer-events: none;
+}
+
+/* FOOTER */
+.footer-mini {
+  border-top: 1px solid var(--ln-line);
+  padding: 32px 0; text-align: center;
+  font-size: .82rem; color: var(--ln-ink-3);
+  position: relative; z-index: 5;
+}
+.footer-mini a { color: var(--ln-ink-2); transition: color .25s; }
+.footer-mini a:hover { color: var(--ln-gold-2); }
+
+/* REVEAL */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+}
+.reveal.tampil { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader" aria-hidden="true">
+  <div class="loader-isi">
+    <div class="loader-emblem"><span>📖</span></div>
+    <div class="loader-teks">Membuka Kodeks</div>
+  </div>
+</div>
+
+<div id="scroll-progress" aria-hidden="true"></div>
+<div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+<canvas id="partikel" aria-hidden="true"></canvas>
+
+<nav class="nav" id="nav" aria-label="Navigasi">
+  <div class="nav-wadah">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-ikon" aria-hidden="true">📜</div>
+      <div class="nav-logo-teks">
+        <strong>Jejak Sejarah</strong>
+        <small>Nusantara</small>
+      </div>
+    </a>
+    <div class="nav-aksi">
+      <a class="nav-ikon-btn aktif" href="kodeks.html" title="Kodeks" aria-label="Kodeks">
+        📖 <span class="badge" id="badge-kodeks">0</span>
+      </a>
+      <a class="nav-ikon-btn opsional" href="jurnal.html" title="Jurnal" aria-label="Jurnal">
+        ✍️ <span class="badge" id="badge-jurnal">0</span>
+      </a>
+      <a class="nav-ikon-btn opsional" href="rapor.html" title="Rapor" aria-label="Rapor">📊</a>
+      <a class="nav-ikon-btn" href="dashboard.html" title="Peta Kronik" aria-label="Peta Kronik">🗺️</a>
+    </div>
+  </div>
+</nav>
+
+<header class="header-kodeks">
+  <div class="wadah-ln">
+    <span class="eyebrow reveal">Ensiklopedia Pribadi</span>
+    <h1 class="reveal">Kodeks <em>Sejarah</em></h1>
+    <p class="reveal">
+      Kumpulan tokoh, tempat, istilah, dan artefak yang telah kamu temukan
+      sepanjang perjalanan. Setiap entri adalah pecahan pengetahuan yang
+      memperkaya pemahamanmu tentang sejarah Nusantara.
+    </p>
+
+    <div class="kodeks-progress reveal">
+      <div class="kodeks-progress-head">
+        <div class="label">
+          <div class="ikon" aria-hidden="true">📚</div>
+          <div>
+            <h3>Progres Koleksi</h3>
+            <div class="sub" id="progress-sub">Memuat…</div>
+          </div>
+        </div>
+        <div class="kodeks-persen" id="progress-persen">0%</div>
+      </div>
+      <div class="kodeks-track">
+        <div class="kodeks-isi" id="progress-isi"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wadah-ln">
+
+  <div class="toolbar">
+    <div class="search-box reveal">
+      <span class="ikon" aria-hidden="true">🔍</span>
+      <input type="text" id="cari" placeholder="Cari tokoh, tempat, istilah, atau artefak..." autocomplete="off" />
+      <button class="clear tersembunyi" id="cari-clear" aria-label="Bersihkan pencarian">✕</button>
+    </div>
+
+    <div class="filter-row reveal">
+      <span class="filter-label">Kategori</span>
+      <button class="filter-chip aktif" data-filter-kategori="semua" data-jml-id="kat-semua">
+        Semua <span class="jml" id="kat-semua">0</span>
+      </button>
+      <button class="filter-chip" data-filter-kategori="tokoh" data-jml-id="kat-tokoh">
+        👤 Tokoh <span class="jml" id="kat-tokoh">0</span>
+      </button>
+      <button class="filter-chip" data-filter-kategori="tempat" data-jml-id="kat-tempat">
+        📍 Tempat <span class="jml" id="kat-tempat">0</span>
+      </button>
+      <button class="filter-chip" data-filter-kategori="istilah" data-jml-id="kat-istilah">
+        💬 Istilah <span class="jml" id="kat-istilah">0</span>
+      </button>
+      <button class="filter-chip" data-filter-kategori="artefak" data-jml-id="kat-artefak">
+        🏺 Artefak <span class="jml" id="kat-artefak">0</span>
+      </button>
+    </div>
+
+    <div class="filter-row reveal">
+      <span class="filter-label">Zaman</span>
+      <button class="filter-chip aktif" data-filter-zaman="semua" data-jml-id="zm-semua">
+        Semua <span class="jml" id="zm-semua">0</span>
+      </button>
+      <!-- Diisi oleh JavaScript -->
+      <div id="filter-zaman-wadah" style="display: contents"></div>
+    </div>
+  </div>
+
+  <div class="hasil-info reveal">
+    <span>Menampilkan <strong id="jml-hasil">0</strong> entri</span>
+    <div class="urut">
+      <label for="urut" style="font-size:.78rem">Urutkan:</label>
+      <select id="urut">
+        <option value="abjad">Abjad A-Z</option>
+        <option value="abjad-desc">Abjad Z-A</option>
+        <option value="zaman">Zaman (awal → akhir)</option>
+        <option value="baru">Baru ditemukan</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="kodeks-grid" id="grid-kodeks"></div>
+
+</main>
+
+<footer class="footer-mini">
+  <div class="wadah-ln">
+    © <span id="tahun">2025</span> Jejak Sejarah Nusantara ·
+    <a href="index.html">Beranda</a> ·
+    <a href="dashboard.html">Peta Kronik</a> ·
+    <a href="jurnal.html">Jurnal</a>
+  </div>
+</footer>
+
+<script src="assets/js/core.js"></script>
+<script src="assets/js/data/manifest.js"></script>
+<script src="assets/js/data/kodeks.js"></script>
+
+<script>
+(function(){
+  "use strict";
+
+  const $  = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+  const kabur = (s) => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+  /* =============== FALLBACK DATA =============== */
+  if (!window.KODEKS) {
+    window.KODEKS = {
+      "pleistosen": {
+        judul: "Zaman Pleistosen",
+        kategori: "istilah",
+        zaman: "era01",
+        ikon: "❄️",
+        ringkas: "Periode geologi 2,6 juta – 11.700 tahun lalu, masa hidup manusia purba awal.",
+        isi: "Pada zaman ini terjadi beberapa kali zaman es. Permukaan laut turun hingga Paparan Sunda menghubungkan Sumatra, Jawa, dan Kalimantan dengan daratan Asia. Kondisi inilah yang memungkinkan manusia purba dan hewan besar bermigrasi ke Nusantara.",
+        fakta: ["Terjadi 2,6 juta – 11.700 tahun lalu", "Beberapa kali zaman es", "Paparan Sunda terbentuk"],
+        sumber: "Buku Sejarah Indonesia Kelas X, Kemendikbud (2017)"
+      },
+      "pithecanthropus": {
+        judul: "Pithecanthropus erectus",
+        kategori: "tokoh",
+        zaman: "era01",
+        ikon: "🦴",
+        ringkas: "Manusia purba yang ditemukan Eugene Dubois di Trinil, 1891.",
+        isi: "Nama ini berarti 'manusia kera yang berdiri tegak'. Volume otaknya sekitar 900 cc, lebih besar dari kera tetapi lebih kecil dari manusia modern. Ia hidup sekitar 1 juta – 500.000 tahun lalu dan hidup dari berburu serta meramu.",
+        fakta: ["Ditemukan 1891 di Trinil, Ngawi", "Volume otak: 900 cc", "Hidup 1 juta – 500.000 tahun lalu"],
+        sumber: "Museum Sangiran"
+      },
+      "sangiran": {
+        judul: "Sangiran",
+        kategori: "tempat",
+        zaman: "era01",
+        ikon: "🏞️",
+        ringkas: "Situs fosil manusia purba di Jawa Tengah, Warisan Dunia UNESCO 1996.",
+        isi: "Situs Sangiran terletak di Kabupaten Sragen dan Karanganyar, Jawa Tengah. Di sini ditemukan lebih dari 100 fosil manusia purba dari berbagai lapisan zaman Pleistosen.",
+        fakta: ["Ditetapkan UNESCO 1996", "Luas: 56 km²", "Lebih dari 100 fosil manusia purba"],
+        sumber: "UNESCO World Heritage Centre"
+      },
+      "kjokkenmoddinger": {
+        judul: "Kjokkenmoddinger",
+        kategori: "istilah",
+        zaman: "era01",
+        ikon: "🐚",
+        ringkas: "Timbunan kulit kerang sisa makanan manusia mesolitikum.",
+        isi: "Kjokkenmoddinger berasal dari bahasa Denmark yang berarti 'sampah dapur'. Timbunan ini menjadi bukti bahwa manusia mesolitikum di pesisir Sumatra hidup dari mengumpulkan hasil laut.",
+        fakta: ["Ditemukan di pesisir Sumatra Timur", "Bukti pola hidup food gathering", "Berumur ribuan tahun"],
+        sumber: "Buku Sejarah Indonesia Kelas X, Kemendikbud (2017)"
+      },
+      "kapak-genggam": {
+        judul: "Kapak Genggam",
+        kategori: "artefak",
+        zaman: "era01",
+        ikon: "🪓",
+        ringkas: "Alat batu serbaguna manusia purba untuk memotong dan menggali.",
+        isi: "Kapak genggam dibuat dengan cara memangkas batu di kedua sisinya hingga tajam. Alat ini digunakan untuk memotong daging, menguliti hewan, menggali tanah, dan memecah tulang.",
+        fakta: ["Disebut juga 'chopper'", "Berfungsi serbaguna", "Dibuat dengan teknik pemangkasan dua sisi"],
+        sumber: "Museum Sangiran"
+      }
+    };
+  }
+
+  /* =============== LOADER =============== */
+  setTimeout(() => {
+    const l = $("#loader");
+    if (l) { l.classList.add("selesai"); setTimeout(() => l.remove(), 600); }
+  }, 500);
+
+  /* =============== CURSOR =============== */
+  (function(){
+    if (matchMedia("(hover: none)").matches) return;
+    const dot = $("#cursor-dot"), ring = $("#cursor-ring");
+    let mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
+    document.addEventListener("mousemove", e => {
+      mx = e.clientX; my = e.clientY;
+      document.body.classList.add("cursor-aktif");
+      dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+    });
+    (function loop(){
+      rx += (mx-rx)*0.16; ry += (my-ry)*0.16;
+      ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+      requestAnimationFrame(loop);
+    })();
+    const hov = "a,button,.kartu-kodeks,.filter-chip,input,select";
+    document.addEventListener("mouseover", e => { if(e.target.closest(hov)) ring.classList.add("hover"); });
+    document.addEventListener("mouseout", e => { if(e.target.closest(hov)) ring.classList.remove("hover"); });
+    document.addEventListener("mouseleave", () => document.body.classList.remove("cursor-aktif"));
+  })();
+
+  /* =============== SCROLL UI =============== */
+  (function(){
+    const bar = $("#scroll-progress"), nav = $("#nav");
+    function upd(){
+      const h = document.documentElement.scrollHeight - innerHeight;
+      bar.style.width = (h > 0 ? (scrollY/h)*100 : 0) + "%";
+      nav.classList.toggle("scrolled", scrollY > 20);
+    }
+    addEventListener("scroll", upd, { passive:true });
+    addEventListener("resize", upd);
+    upd();
+  })();
+
+  /* =============== PARTIKEL =============== */
+  (function(){
+    const cv = $("#partikel");
+    if (!cv || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const ctx = cv.getContext("2d");
+    let W, H, parts = [];
+    const N = innerWidth < 720 ? 20 : 45;
+    function resize(){ W = cv.width = innerWidth; H = cv.height = innerHeight; }
+    resize(); addEventListener("resize", resize);
+    function buat(){
+      return {
+        x: Math.random()*W, y: Math.random()*H,
+        r: Math.random()*1.3+0.3,
+        vx: (Math.random()-.5)*0.1,
+        vy: -Math.random()*0.2-0.04,
+        a: Math.random()*Math.PI*2,
+        va: (Math.random()-.5)*0.02,
+        hue: Math.random()>.55 ? 45 : 170
+      };
+    }
+    for (let i=0;i<N;i++) parts.push(buat());
+    (function loop(){
+      ctx.clearRect(0,0,W,H);
+      parts.forEach(p => {
+        p.x+=p.vx; p.y+=p.vy; p.a+=p.va;
+        if (p.y<-10){ p.y=H+10; p.x=Math.random()*W; }
+        if (p.x<-10) p.x=W+10; else if (p.x>W+10) p.x=-10;
+        const al = 0.3 + Math.sin(p.a)*0.3;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle = `hsla(${p.hue},80%,65%,${al})`;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = `hsla(${p.hue},80%,60%,${al*0.8})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(loop);
+    })();
+  })();
+
+  /* =============== MUAT SAVE =============== */
+  let SAVE = null;
+  try { SAVE = (typeof JN !== "undefined" && JN.muat) ? JN.muat() : null; } catch(e){}
+  if (!SAVE) SAVE = { kodeks: [], jurnal: [], progres: {}, eraTerbuka:["era01"], pemain:{nama:"Penjelajah"} };
+
+  const KODEKS_DIBUKA = SAVE.kodeks || [];
+  const MANIFEST = window.ERA_MANIFEST || [];
+  const KODEKS_ALL = window.KODEKS || {};
+
+  /* =============== HITUNG JUMLAH =============== */
+  const TOTAL_ENTRI = Object.keys(KODEKS_ALL).length;
+  const DIBUKA = KODEKS_DIBUKA.length;
+  const PERSEN = TOTAL_ENTRI ? Math.round(DIBUKA / TOTAL_ENTRI * 100) : 0;
+
+  $("#progress-persen").textContent = PERSEN + "%";
+  $("#progress-isi").style.width = PERSEN + "%";
+  $("#progress-sub").textContent = DIBUKA + " dari " + TOTAL_ENTRI + " entri terbuka";
+  $("#badge-kodeks").textContent = DIBUKA;
+  $("#badge-jurnal").textContent = (SAVE.jurnal || []).length;
+  $("#tahun").textContent = new Date().getFullYear();
+
+  /* =============== ISI FILTER ZAMAN =============== */
+  const wadahZaman = $("#filter-zaman-wadah");
+  MANIFEST.forEach(era => {
+    const jumlah = Object.values(KODEKS_ALL).filter(k => k.zaman === era.id).length;
+    if (!jumlah) return;
+    const btn = document.createElement("button");
+    btn.className = "filter-chip";
+    btn.dataset.filterZaman = era.id;
+    btn.innerHTML = era.ikon + " " + era.judul + ' <span class="jml">' + jumlah + '</span>';
+    wadahZaman.appendChild(btn);
+  });
+
+  /* =============== HITUNG JUMLAH PER KATEGORI =============== */
+  const katCount = { tokoh:0, tempat:0, istilah:0, artefak:0 };
+  Object.values(KODEKS_ALL).forEach(k => {
+    if (katCount[k.kategori] !== undefined) katCount[k.kategori]++;
+  });
+  $("#kat-semua").textContent = TOTAL_ENTRI;
+  $("#kat-tokoh").textContent = katCount.tokoh;
+  $("#kat-tempat").textContent = katCount.tempat;
+  $("#kat-istilah").textContent = katCount.istilah;
+  $("#kat-artefak").textContent = katCount.artefak;
+  $("#zm-semua").textContent = TOTAL_ENTRI;
+
+  /* =============== STATE FILTER =============== */
+  const state = {
+    kategori: "semua",
+    zaman: "semua",
+    cari: "",
+    urut: "abjad"
+  };
+
+  /* =============== HELPER: info era =============== */
+  function getEra(eraId){
+    return MANIFEST.find(e => e.id === eraId) || { judul:"—", ikon:"📜", warna:"#d4af37", no:0 };
+  }
+
+  function getWarnaKategori(kat){
+    return ({
+      tokoh: "#8b5cf6",
+      tempat: "#4fd1c5",
+      istilah: "#f59e0b",
+      artefak: "#e85a71"
+    })[kat] || "#d4af37";
+  }
+
+  function labelKategori(kat){
+    return ({ tokoh:"Tokoh", tempat:"Tempat", istilah:"Istilah", artefak:"Artefak" })[kat] || "Umum";
+  }
+
+  /* =============== RENDER =============== */
+  function renderKodeks(){
+    const grid = $("#grid-kodeks");
+    grid.innerHTML = "";
+
+    /* Bangun array semua entri */
+    let semua = Object.entries(KODEKS_ALL).map(([id, data]) => ({
+      id, ...data,
+      ditemukan: KODEKS_DIBUKA.includes(id)
+    }));
+
+    /* Filter kategori */
+    if (state.kategori !== "semua") {
+      semua = semua.filter(k => k.kategori === state.kategori);
+    }
+    /* Filter zaman */
+    if (state.zaman !== "semua") {
+      semua = semua.filter(k => k.zaman === state.zaman);
+    }
+    /* Filter pencarian */
+    if (state.cari) {
+      const q = state.cari.toLowerCase();
+      semua = semua.filter(k =>
+        (k.judul || "").toLowerCase().includes(q) ||
+        (k.ringkas || "").toLowerCase().includes(q) ||
+        (k.isi || "").toLowerCase().includes(q)
+      );
+    }
+
+    /* Sortir */
+    semua.sort((a, b) => {
+      if (state.urut === "abjad") return a.judul.localeCompare(b.judul, "id");
+      if (state.urut === "abjad-desc") return b.judul.localeCompare(a.judul, "id");
+      if (state.urut === "zaman") {
+        const ea = getEra(a.zaman).no || 99;
+        const eb = getEra(b.zaman).no || 99;
+        return ea - eb;
+      }
+      if (state.urut === "baru") {
+        const ia = KODEKS_DIBUKA.indexOf(a.id);
+        const ib = KODEKS_DIBUKA.indexOf(b.id);
+        return (ib === -1 ? 9999 : ib) - (ia === -1 ? 9999 : ia);
+      }
+      return 0;
+    });
+
+    /* Update jumlah hasil */
+    $("#jml-hasil").textContent = semua.length;
+
+    /* Empty state */
+    if (semua.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state">
+          <div class="ikon">📭</div>
+          <h3>Tidak ada entri yang cocok</h3>
+          <p>Coba ubah filter atau kata kunci pencarianmu.</p>
+        </div>`;
+      return;
+    }
+
+    /* Render kartu */
+    semua.forEach((k, i) => {
+      const era = getEra(k.zaman);
+      const warna = k.ditemukan ? (era.warna || getWarnaKategori(k.kategori)) : "#5a6073";
+
+      const kartu = document.createElement("article");
+      kartu.className = "kartu-kodeks" + (k.ditemukan ? "" : " terkunci");
+      kartu.style.setProperty("--kodeks-warna", warna);
+      kartu.style.transitionDelay = Math.min(i * 0.02, 0.3) + "s";
+
+      if (k.ditemukan) {
+        kartu.innerHTML = `
+          <div class="kartu-kodeks-media" aria-hidden="true">${k.ikon || "📜"}</div>
+          <div class="kartu-kodeks-body">
+            <span class="kartu-kodeks-kategori">
+              <span class="dot"></span> ${labelKategori(k.kategori)}
+            </span>
+            <h3>${kabur(k.judul)}</h3>
+            <p>${kabur(k.ringkas || "")}</p>
+          </div>`;
+        kartu.addEventListener("click", () => bukaDetail(k, era));
+      } else {
+        kartu.innerHTML = `
+          <div class="kartu-kodeks-media" aria-hidden="true">📜</div>
+          <div class="kartu-kodeks-body">
+            <span class="kartu-kodeks-kategori"><span class="dot"></span> ${labelKategori(k.kategori)}</span>
+            <h3>• • • • •</h3>
+            <p>Detail entri akan terbuka saat kamu menemukannya di petualangan.</p>
+          </div>`;
+        kartu.addEventListener("click", () => {
+          if (typeof JN !== "undefined" && JN.toast) {
+            JN.toast("🔒", "Belum Ditemukan", "Entri ini akan terbuka saat kamu menjumpainya dalam permainan.", 3200);
+          }
+        });
+      }
+
+      grid.appendChild(kartu);
+    });
+  }
+
+  /* =============== MODAL DETAIL =============== */
+  function bukaDetail(k, era){
+    const lama = $(".modal-detail");
+    if (lama) lama.remove();
+
+    const modal = document.createElement("div");
+    modal.className = "modal-detail";
+
+    const faktaHTML = Array.isArray(k.fakta) && k.fakta.length
+      ? `<div class="modal-detail-fakta">
+          <h4>📌 Fakta Kunci</h4>
+          <ul>${k.fakta.map(f => `<li>${kabur(f)}</li>`).join("")}</ul>
+        </div>`
+      : "";
+
+    const sumberHTML = k.sumber
+      ? `<div class="modal-detail-sumber">
+          <strong>Sumber</strong>
+          ${kabur(k.sumber)}
+        </div>`
+      : "";
+
+    modal.innerHTML = `
+      <div class="modal-detail-isi">
+        <button class="modal-detail-tutup" aria-label="Tutup">✕</button>
+        <div class="modal-detail-header">
+          <div class="modal-detail-ikon" aria-hidden="true">${k.ikon || "📜"}</div>
+          <div class="modal-detail-judul">
+            <div class="modal-detail-kategori">
+              ${labelKategori(k.kategori)} · ${era.ikon || "📜"} ${kabur(era.judul)}
+            </div>
+            <h2>${kabur(k.judul)}</h2>
+            <div class="zaman">${kabur(era.periode || "")}</div>
+          </div>
+        </div>
+        <div class="modal-detail-body">
+          ${k.ringkas ? `<div class="modal-detail-ringkas">"${kabur(k.ringkas)}"</div>` : ""}
+          <div class="modal-detail-isi">
+            ${(k.isi || "").split("\n\n").map(p => `<p>${p}</p>`).join("")}
+          </div>
+          ${faktaHTML}
+          ${sumberHTML}
+        </div>
+      </div>`;
+
+    document.body.appendChild(modal);
+    document.body.style.overflow = "hidden";
+
+    function tutup(){
+      modal.style.opacity = "0";
+      setTimeout(() => {
+        modal.remove();
+        document.body.style.overflow = "";
+      }, 200);
+    }
+
+    modal.querySelector(".modal-detail-tutup").addEventListener("click", tutup);
+    modal.addEventListener("click", e => { if (e.target === modal) tutup(); });
+    document.addEventListener("keydown", function esc(e){
+      if (e.key === "Escape") { tutup(); document.removeEventListener("keydown", esc); }
+    });
+
+    if (typeof JN !== "undefined" && JN.toast) {
+      JN.toast("📖", "Entri Kodeks", k.judul, 2600);
+    }
+  }
+
+  /* =============== FILTER HANDLER =============== */
+  $$("[data-filter-kategori]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      $$("[data-filter-kategori]").forEach(b => b.classList.remove("aktif"));
+      btn.classList.add("aktif");
+      state.kategori = btn.dataset.filterKategori;
+      renderKodeks();
+    });
+  });
+
+  $$("[data-filter-zaman]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      $$("[data-filter-zaman]").forEach(b => b.classList.remove("aktif"));
+      btn.classList.add("aktif");
+      state.zaman = btn.dataset.filterZaman;
+      renderKodeks();
+    });
+  });
+
+  /* =============== PENCARIAN =============== */
+  let tmr;
+  const inpCari = $("#cari");
+  const btnClear = $("#cari-clear");
+
+  inpCari.addEventListener("input", () => {
+    clearTimeout(tmr);
+    const val = inpCari.value.trim();
+    btnClear.classList.toggle("tersembunyi", !val);
+    tmr = setTimeout(() => {
+      state.cari = val;
+      renderKodeks();
+    }, 220);
+  });
+
+  btnClear.addEventListener("click", () => {
+    inpCari.value = "";
+    state.cari = "";
+    btnClear.classList.add("tersembunyi");
+    renderKodeks();
+    inpCari.focus();
+  });
+
+  /* =============== URUTKAN =============== */
+  $("#urut").addEventListener("change", e => {
+    state.urut = e.target.value;
+    renderKodeks();
+  });
+
+  /* =============== REVEAL =============== */
+  (function(){
+    const items = $$(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      items.forEach(el => el.classList.add("tampil")); return;
+    }
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add("tampil"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    items.forEach(el => io.observe(el));
+  })();
+
+  /* =============== INIT =============== */
+  renderKodeks();
+
+  /* Sambutan sekali per sesi */
+  if (!sessionStorage.getItem("jsn_kodeks_disapa") && typeof JN !== "undefined" && JN.toast) {
+    setTimeout(() => {
+      if (DIBUKA === 0) {
+        JN.toast("📖", "Kodeks Masih Kosong", "Mainkan petualangan untuk menemukan entri sejarah pertama.", 4800);
+      } else {
+        JN.toast("📖", "Kodeks Terbuka", DIBUKA + " dari " + TOTAL_ENTRI + " entri telah kamu kumpulkan.", 4000);
+      }
+      sessionStorage.setItem("jsn_kodeks_disapa", "1");
+    }, 900);
+  }
+})();
+</script>
+
+</body>
+</html>

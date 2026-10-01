@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#08090c" />
+<title>Bab 1: Jejak di Tepi Sungai — Jejak Sejarah Nusantara</title>
+<meta name="description" content="Bab pertama petualangan di Zaman Pra Sejarah." />
+
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="../../assets/css/base.css" />
+<link rel="stylesheet" href="../../assets/css/ui.css" />
+
+<style>
+:root {
+  --ln-bg-0: #08090c; --ln-bg-2: #131720; --ln-bg-3: #1a1f2b;
+  --ln-ink: #eef0f4; --ln-ink-2: #9ba3b4; --ln-ink-3: #5a6073;
+  --ln-gold: #d4af37; --ln-gold-2: #f7d97a; --ln-gold-3: #a3801c;
+  --ln-teal: #4fd1c5; --ln-rose: #e85a71; --ln-green: #22c55e;
+  --ln-line: rgba(255,255,255,.07); --ln-line-2: rgba(255,255,255,.12);
+  --ln-glass: rgba(255,255,255,.03); --ln-glass-2: rgba(255,255,255,.06);
+  --ln-r: 18px; --ln-r-lg: 28px;
+  --ln-font-display: "Fraunces", Georgia, serif;
+  --ln-font-body: "Inter", system-ui, sans-serif;
+  --ln-font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --ln-lebar: 860px; --ln-nav-h: 60px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--ln-bg-0); color: var(--ln-ink);
+  font-family: var(--ln-font-body); font-size: 16px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  min-height: 100vh; position: relative;
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(212,175,55,.06), transparent 45%),
+    radial-gradient(circle at 85% 100%, rgba(79,209,197,.05), transparent 45%);
+  background-attachment: fixed;
+}
+body.no-scroll { overflow: hidden; }
+img { max-width: 100%; display: block; }
+button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--ln-gold); color: #1a1500; }
+
+/* LOADER */
+#loader {
+  position: fixed; inset: 0; z-index: 10000; background: var(--ln-bg-0);
+  display: grid; place-items: center;
+  transition: opacity .5s ease, visibility .5s ease;
+}
+#loader.selesai { opacity: 0; visibility: hidden; }
+.loader-emblem {
+  width: 56px; height: 56px; position: relative; margin-bottom: 18px;
+}
+.loader-emblem::before, .loader-emblem::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--ln-gold); border-right-color: var(--ln-gold-2);
+  animation: spin 1.4s linear infinite;
+}
+.loader-emblem::after {
+  inset: 10px; border-top-color: var(--ln-teal);
+  border-right-color: transparent;
+  animation-direction: reverse; animation-duration: 2s;
+}
+.loader-emblem span {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 1.4rem; animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+.loader-isi { display: flex; flex-direction: column; align-items: center; }
+.loader-teks {
+  font-family: var(--ln-font-mono); font-size: .68rem;
+  letter-spacing: .3em; text-transform: uppercase; color: var(--ln-ink-3);
+}
+
+/* BILAH ATAS */
+.bilah {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(8,9,12,.92);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--ln-line);
+  padding: 10px 0;
+}
+.bilah-wadah {
+  width: min(100% - 32px, var(--ln-lebar));
+  margin-inline: auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.bilah-kiri {
+  display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1;
+}
+.btn-kembali {
+  width: 38px; height: 38px; border-radius: 12px;
+  display: grid; place-items: center; flex-shrink: 0;
+  background: var(--ln-glass); border: 1px solid var(--ln-line);
+  color: var(--ln-ink-2); font-size: 1rem;
+  transition: all .25s ease;
+}
+.btn-kembali:hover {
+  background: var(--ln-glass-2); border-color: var(--ln-gold);
+  color: var(--ln-gold-2); transform: translateX(-2px);
+}
+.bilah-judul { min-width: 0; }
+.bilah-judul strong {
+  display: block; font-family: var(--ln-font-display);
+  font-size: .98rem; font-weight: 700;
+  letter-spacing: -.01em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.bilah-judul small {
+  font-family: var(--ln-font-mono); font-size: .62rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--ln-gold);
+}
+.bilah-kanan { display: flex; align-items: center; gap: 6px; }
+.btn-ikon {
+  width: 38px; height: 38px; border-radius: 12px;
+  display: grid; place-items: center;
+  background: var(--ln-glass); border: 1px solid var(--ln-line);
+  color: var(--ln-ink-2); font-size: 1rem;
+  transition: all .25s ease; position: relative;
+}
+.btn-ikon:hover {
+  background: var(--ln-glass-2); border-color: var(--ln-gold);
+  color: var(--ln-gold-2); transform: translateY(-2px);
+}
+@media (max-width: 560px) {
+  .btn-ikon.opsional { display: none; }
+}
+
+/* BAR PROGRES */
+.bar-wrap {
+  width: min(100% - 32px, var(--ln-lebar));
+  margin: 12px auto 0;
+}
+.bar-label {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 6px;
+  font-family: var(--ln-font-mono); font-size: .65rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--ln-ink-3);
+}
+.bar {
+  height: 6px; border-radius: 100px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--ln-line);
+  overflow: hidden;
+}
+.bar-isi {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--ln-gold), var(--ln-gold-2), var(--ln-teal));
+  border-radius: 100px;
+  transition: width .6s cubic-bezier(.22,1,.36,1);
+  box-shadow: 0 0 16px rgba(212,175,55,.5);
+}
+
+/* PANGGUNG */
+.panggung {
+  width: min(100% - 32px, var(--ln-lebar));
+  margin: 28px auto 100px;
+  min-height: 60vh;
+}
+@media (max-width: 640px) {
+  .panggung { width: calc(100% - 24px); margin-top: 20px; }
+  .bar-wrap { width: calc(100% - 24px); }
+}
+
+/* NODE UMUM */
+.node { animation: naik .5s cubic-bezier(.22,1,.36,1) both; }
+@keyframes naik {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* NARASI */
+.node-narasi-latar {
+  border-radius: var(--ln-r);
+  overflow: hidden;
+  margin-bottom: 22px;
+  border: 1px solid var(--ln-line);
+  aspect-ratio: 16/9;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(212,175,55,.15), transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(79,209,197,.08), transparent 60%),
+    linear-gradient(160deg, #1a1f2b, #0d0f14);
+  position: relative;
+  display: grid; place-items: center;
+  font-size: 4rem;
+  color: rgba(255,255,255,.15);
+}
+.node-narasi-latar::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.5));
+}
+
+.panel-perkamen {
+  background: linear-gradient(160deg, #f3e9d2, #e8dcbb);
+  color: #1b1a17;
+  border-radius: var(--ln-r);
+  padding: 28px 30px;
+  box-shadow: 0 20px 60px -20px rgba(0,0,0,.7);
+  border: 1px solid #d9c9a3;
+  position: relative;
+  overflow: hidden;
+}
+.panel-perkamen::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(201,162,39,.15), transparent 50%);
+  pointer-events: none;
+}
+.panel-perkamen > * { position: relative; }
+
+.panel-perkamen .label-kecil {
+  font-family: var(--ln-font-mono);
+  font-size: .68rem; letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #7a6a45; font-weight: 700;
+  margin-bottom: 12px;
+}
+.panel-perkamen .narasi {
+  font-family: var(--ln-font-display);
+  font-size: 1.1rem;
+  line-height: 1.85;
+  color: #1b1a17;
+}
+.panel-perkamen .narasi em { font-style: italic; color: #6b5b2a; }
+.panel-perkamen .narasi strong { font-weight: 700; color: #4a3a10; }
+
+/* TOMBOL LANJUT */
+.tombol-lanjut {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px; width: 100%;
+  margin-top: 24px;
+  padding: 16px 28px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, var(--ln-gold), var(--ln-gold-2));
+  color: #1a1500;
+  font-family: var(--ln-font-body);
+  font-weight: 700; font-size: .95rem;
+  letter-spacing: .02em;
+  box-shadow: 0 12px 32px -8px rgba(212,175,55,.5);
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  position: relative; overflow: hidden;
+}
+.tombol-lanjut:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 44px -8px rgba(212,175,55,.75);
+}
+.tombol-lanjut::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.5) 50%, transparent 70%);
+  transform: translateX(-100%); transition: transform .7s ease;
+}
+.tombol-lanjut:hover::before { transform: translateX(100%); }
+.tombol-lanjut > * { position: relative; }
+
+/* DIALOG */
+.kartu-dialog {
+  background: linear-gradient(160deg, rgba(19,23,32,.95), rgba(13,15,20,.98));
+  border: 1px solid var(--ln-line);
+  border-radius: var(--ln-r);
+  padding: 26px;
+  display: flex; gap: 20px; align-items: flex-start;
+  box-shadow: 0 20px 60px -25px rgba(0,0,0,.9);
+  position: relative;
+}
+.kartu-dialog::before {
+  content: "";
+  position: absolute; top: 20px; left: 0; bottom: 20px;
+  width: 3px;
+  background: linear-gradient(180deg, var(--ln-gold), transparent);
+  border-radius: 100px;
+}
+.dialog-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 1.9rem;
+  flex-shrink: 0;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(212,175,55,.35), transparent 60%),
+    linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  border: 2px solid var(--ln-gold);
+  box-shadow: 0 0 24px -4px rgba(212,175,55,.5);
+  animation: floatAvatar 4s ease-in-out infinite;
+}
+@keyframes floatAvatar {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-5px); }
+}
+.dialog-teks { min-width: 0; flex: 1; }
+.dialog-npc {
+  font-family: var(--ln-font-mono);
+  font-size: .7rem; letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ln-gold-2); font-weight: 600;
+  margin-bottom: 10px;
+}
+.dialog-teks .narasi {
+  font-family: var(--ln-font-display);
+  font-size: 1.08rem; line-height: 1.8;
+  color: var(--ln-ink);
+}
+.dialog-teks .narasi em { font-style: italic; color: var(--ln-gold-2); }
+.dialog-teks .narasi strong { color: var(--ln-gold-2); font-weight: 600; }
+@media (max-width: 560px) {
+  .kartu-dialog { padding: 20px; gap: 14px; }
+  .dialog-avatar { width: 54px; height: 54px; font-size: 1.5rem; }
+}
+
+/* KUIS */
+.kartu-kuis {
+  background: linear-gradient(160deg, rgba(19,23,32,.95), rgba(13,15,20,.98));
+  border: 1px solid var(--ln-line);
+  border-radius: var(--ln-r);
+  padding: 26px;
+  box-shadow: 0 20px 60px -25px rgba(0,0,0,.9);
+}
+.chip-kuis {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 100px;
+  background: rgba(212,175,55,.12);
+  border: 1px solid rgba(212,175,55,.35);
+  color: var(--ln-gold-2);
+  font-family: var(--ln-font-mono);
+  font-size: .68rem; letter-spacing: .15em;
+  text-transform: uppercase; font-weight: 600;
+}
+.kartu-kuis .pertanyaan {
+  font-family: var(--ln-font-display);
+  font-size: 1.15rem; font-weight: 600;
+  line-height: 1.5; letter-spacing: -.01em;
+  margin: 18px 0 20px; color: var(--ln-ink);
+}
+.opsi-wrap { display: flex; flex-direction: column; gap: 10px; }
+.tombol-opsi {
+  display: flex; align-items: center; gap: 14px;
+  width: 100%; text-align: left;
+  padding: 16px 20px;
+  border-radius: var(--ln-r);
+  border: 1.5px solid var(--ln-line);
+  background: var(--ln-glass);
+  color: var(--ln-ink);
+  font-size: .98rem; line-height: 1.5;
+  transition: all .25s ease;
+}
+.tombol-opsi:hover:not(:disabled) {
+  border-color: var(--ln-gold);
+  background: rgba(212,175,55,.06);
+  transform: translateX(4px);
+}
+.tombol-opsi .nomor {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--ln-glass-2); border: 1px solid var(--ln-line-2);
+  font-family: var(--ln-font-mono); font-size: .82rem; font-weight: 700;
+  color: var(--ln-ink-2); flex-shrink: 0;
+  transition: all .25s ease;
+}
+.tombol-opsi.benar {
+  border-color: var(--ln-green);
+  background: rgba(34,197,94,.1);
+}
+.tombol-opsi.benar .nomor {
+  background: var(--ln-green); border-color: var(--ln-green); color: #fff;
+}
+.tombol-opsi.salah {
+  border-color: var(--ln-rose);
+  background: rgba(232,90,113,.1);
+}
+.tombol-opsi.salah .nomor {
+  background: var(--ln-rose); border-color: var(--ln-rose); color: #fff;
+}
+.umpan {
+  margin-top: 18px;
+  padding: 20px 22px;
+  border-radius: var(--ln-r);
+  background: rgba(34,197,94,.06);
+  border: 1px solid rgba(34,197,94,.3);
+  animation: naik .35s ease both;
+}
+.umpan.salah {
+  background: rgba(232,90,113,.06);
+  border-color: rgba(232,90,113,.3);
+}
+.umpan .label {
+  font-family: var(--ln-font-mono);
+  font-size: .68rem; letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #4ade80; font-weight: 700;
+  margin-bottom: 10px;
+}
+.umpan.salah .label { color: #f87171; }
+.umpan p {
+  font-size: .95rem; line-height: 1.7; color: var(--ln-ink);
+  margin: 0;
+}
+.umpan p em { color: var(--ln-gold-2); font-style: italic; }
+.umpan p strong { color: var(--ln-gold-2); }
+
+/* PILIHAN */
+.kartu-pilihan {
+  background: linear-gradient(160deg, rgba(19,23,32,.95), rgba(13,15,20,.98));
+  border: 1px solid var(--ln-line);
+  border-radius: var(--ln-r);
+  padding: 26px;
+  box-shadow: 0 20px 60px -25px rgba(0,0,0,.9);
+}
+.kartu-pilihan .teks {
+  font-family: var(--ln-font-display);
+  font-size: 1.08rem; line-height: 1.75;
+  color: var(--ln-ink); margin-bottom: 20px;
+}
+.kartu-pilihan .teks em { font-style: italic; color: var(--ln-gold-2); }
+
+/* EKSPLORASI */
+.kartu-eksplor {
+  background: linear-gradient(160deg, rgba(19,23,32,.95), rgba(13,15,20,.98));
+  border: 1px solid var(--ln-line);
+  border-radius: var(--ln-r);
+  padding: 24px;
+  box-shadow: 0 20px 60px -25px rgba(0,0,0,.9);
+}
+.eksplor-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.eksplor-hit {
+  font-family: var(--ln-font-mono); font-size: .72rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--ln-ink-3);
+}
+.eksplor-hit strong { color: var(--ln-gold-2); }
+.kartu-eksplor .instruksi {
+  font-size: .95rem; line-height: 1.7;
+  color: var(--ln-ink-2); margin-bottom: 18px;
+}
+.peta-eksplor {
+  position: relative;
+  border-radius: var(--ln-r);
+  overflow: hidden;
+  border: 1px solid var(--ln-line);
+  aspect-ratio: 16/10;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(212,175,55,.12), transparent 55%),
+    radial-gradient(circle at 70% 70%, rgba(79,209,197,.08), transparent 55%),
+    linear-gradient(160deg, #2a1f14, #0d0f14);
+  display: grid; place-items: center;
+  font-size: 5rem;
+  color: rgba(255,255,255,.08);
+  cursor: crosshair;
+}
+.hotspot {
+  position: absolute;
+  width: 40px; height: 40px; margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  background: rgba(212,175,55,.85);
+  border: 3px solid #fff;
+  display: grid; place-items: center;
+  font-weight: 700; color: #1a1500;
+  font-size: 1rem;
+  box-shadow: 0 0 0 0 rgba(212,175,55,.7);
+  animation: denyutHot 2s infinite;
+  transition: all .3s ease;
+}
+.hotspot:hover { transform: scale(1.1); }
+.hotspot.selesai {
+  background: rgba(79,209,197,.85);
+  animation: none;
+  color: #04201e;
+}
+@keyframes denyutHot {
+  0%,100% { box-shadow: 0 0 0 0 rgba(212,175,55,.7); }
+  50%     { box-shadow: 0 0 0 14px rgba(212,175,55,0); }
+}
+.hasil-eksplor {
+  margin-top: 18px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.kartu-hasil {
+  padding: 18px 20px;
+  border-radius: var(--ln-r);
+  background: linear-gradient(160deg, #f3e9d2, #e8dcbb);
+  color: #1b1a17;
+  border-left: 4px solid var(--ln-gold);
+  animation: naik .4s ease both;
+}
+.kartu-hasil .judul {
+  font-family: var(--ln-font-mono);
+  font-size: .68rem; letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #7a6a45; font-weight: 700;
+  margin-bottom: 8px;
+}
+.kartu-hasil .teks {
+  font-family: var(--ln-font-display);
+  font-size: .98rem; line-height: 1.7;
+  color: #1b1a17;
+}
+.kartu-hasil .teks strong { color: #4a3a10; font-weight: 700; }
+
+/* REFLEKSI */
+.kartu-refleksi {
+  background: linear-gradient(160deg, rgba(19,23,32,.95), rgba(13,15,20,.98));
+  border: 1px solid var(--ln-line);
+  border-radius: var(--ln-r);
+  padding: 26px;
+  box-shadow: 0 20px 60px -25px rgba(0,0,0,.9);
+}
+.kartu-refleksi .pertanyaan {
+  font-family: var(--ln-font-display);
+  font-size: 1.08rem; line-height: 1.6;
+  color: var(--ln-ink); margin: 18px 0 18px;
+  font-weight: 600;
+}
+.kartu-refleksi textarea {
+  width: 100%;
+  padding: 18px;
+  border-radius: var(--ln-r);
+  background: var(--ln-glass);
+  border: 1px solid var(--ln-line-2);
+  color: var(--ln-ink);
+  font-family: var(--ln-font-body);
+  font-size: .98rem;
+  line-height: 1.7;
+  resize: vertical;
+  min-height: 140px;
+  transition: all .25s ease;
+}
+.kartu-refleksi textarea:focus {
+  outline: none; border-color: var(--ln-gold);
+  background: var(--ln-glass-2);
+  box-shadow: 0 0 0 4px rgba(212,175,55,.1);
+}
+.kartu-refleksi textarea::placeholder { color: var(--ln-ink-3); }
+.kartu-refleksi textarea:disabled { opacity: .7; cursor: not-allowed; }
+.refleksi-info {
+  display: flex; justify-content: space-between;
+  margin-top: 10px;
+  font-family: var(--ln-font-mono);
+  font-size: .68rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ln-ink-3);
+}
+.refleksi-info strong { color: var(--ln-gold-2); }
+
+/* TUTUP */
+.kartu-tutup {
+  text-align: center;
+  padding: 48px 32px;
+  border-radius: var(--ln-r-lg);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(212,175,55,.2), transparent 60%),
+    linear-gradient(160deg, rgba(19,23,32,.98), rgba(13,15,20,1));
+  border: 1px solid var(--ln-line-2);
+  position: relative;
+  overflow: hidden;
+}
+.kartu-tutup::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 70%);
+  pointer-events: none;
+}
+.kartu-tutup > * { position: relative; }
+.tutup-ikon {
+  width: 88px; height: 88px;
+  margin: 0 auto 20px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  font-size: 2.4rem;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(212,175,55,.4), transparent 60%),
+    linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  border: 2px solid var(--ln-gold);
+  box-shadow: 0 0 40px -8px rgba(212,175,55,.7);
+  animation: floatAvatar 4s ease-in-out infinite;
+}
+.kartu-tutup .label-kecil {
+  font-family: var(--ln-font-mono);
+  font-size: .68rem; letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--ln-gold); font-weight: 600;
+}
+.kartu-tutup h2 {
+  font-family: var(--ln-font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800; letter-spacing: -.02em;
+  margin: 12px 0 16px;
+  background: linear-gradient(180deg, #fff 30%, var(--ln-gold-2));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
+.kartu-tutup .narasi {
+  font-family: var(--ln-font-display);
+  font-size: 1.05rem; line-height: 1.8;
+  font-style: italic;
+  color: var(--ln-ink-2);
+  max-width: 520px; margin: 0 auto;
+}
+.kartu-tutup .narasi em { color: var(--ln-gold-2); }
+.poin-box {
+  display: flex; justify-content: center; gap: 16px;
+  margin: 26px 0 24px; flex-wrap: wrap;
+}
+.chip-poin {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 20px; border-radius: 100px;
+  background: var(--ln-glass);
+  border: 1px solid var(--ln-line-2);
+  font-size: .85rem; font-weight: 600;
+}
+.chip-poin strong {
+  font-family: var(--ln-font-display);
+  font-size: 1.1rem; color: var(--ln-gold-2);
+}
+.tutup-aksi {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 10px; margin-top: 8px;
+}
+.btn-tutup {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 26px; border-radius: 100px;
+  font-weight: 700; font-size: .9rem;
+  transition: all .25s ease; text-decoration: none;
+}
+.btn-tutup.utama {
+  background: linear-gradient(135deg, var(--ln-gold), var(--ln-gold-2));
+  color: #1a1500;
+  box-shadow: 0 12px 32px -8px rgba(212,175,55,.5);
+}
+.btn-tutup.utama:hover { transform: translateY(-2px); }
+.btn-tutup.garis {
+  background: var(--ln-glass);
+  border: 1px solid var(--ln-line-2);
+  color: var(--ln-ink);
+}
+.btn-tutup.garis:hover {
+  border-color: var(--ln-gold); color: var(--ln-gold-2);
+}
+
+/* MODAL */
+.modal-latar {
+  position: fixed; inset: 0; z-index: 900;
+  background: rgba(5,7,10,.85);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: grid; place-items: center; padding: 20px;
+  animation: naik .25s ease both;
+}
+.modal {
+  background: linear-gradient(160deg, rgba(19,23,32,.98), rgba(13,15,20,1));
+  border: 1px solid var(--ln-line-2);
+  border-radius: var(--ln-r-lg);
+  padding: 28px; width: min(100%, 520px);
+  max-height: 86vh; overflow-y: auto;
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,.9);
+}
+.modal h3 {
+  font-family: var(--ln-font-display);
+  font-size: 1.15rem; font-weight: 700;
+  margin-bottom: 16px; letter-spacing: -.01em;
+}
+
+/* TOAST */
+#toast-wadah {
+  position: fixed; left: 50%; bottom: 24px;
+  transform: translateX(-50%); z-index: 9999;
+  display: flex; flex-direction: column; gap: 10px;
+  width: min(92vw, 400px); pointer-events: none;
+}
+.toast {
+  background: rgba(19,23,32,.98);
+  border: 1px solid var(--ln-gold);
+  border-left: 4px solid var(--ln-gold);
+  border-radius: var(--ln-r);
+  padding: 14px 18px;
+  box-shadow: 0 20px 50px -12px rgba(0,0,0,.8);
+  display: flex; gap: 12px; align-items: flex-start;
+  animation: naik .35s ease both;
+  pointer-events: auto;
+  backdrop-filter: blur(12px);
+}
+.toast .ikon { font-size: 1.4rem; line-height: 1; }
+.toast .judul {
+  font-weight: 700; font-size: .85rem;
+  color: var(--ln-gold-2); margin-bottom: 2px;
+}
+.toast .isi { font-size: .85rem; color: var(--ln-ink-2); line-height: 1.5; }
+
+/* RESPONSIF */
+@media (max-width: 640px) {
+  .panel-perkamen { padding: 22px 20px; }
+  .panel-perkamen .narasi { font-size: 1rem; }
+  .kartu-kuis, .kartu-pilihan, .kartu-eksplor, .kartu-refleksi { padding: 20px; }
+  .kartu-kuis .pertanyaan { font-size: 1.05rem; }
+  .kartu-tutup { padding: 36px 22px; }
+  .tutup-ikon { width: 72px; height: 72px; font-size: 2rem; }
+  .hotspot { width: 34px; height: 34px; margin: -17px 0 0 -17px; font-size: .9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body class="no-scroll" data-era="era01" data-bab="bab1">
+
+<!-- LOADER -->
+<div id="loader" aria-hidden="true">
+  <div class="loader-isi">
+    <div class="loader-emblem"><span>🪨</span></div>
+    <div class="loader-teks">Memuat Bab</div>
+  </div>
+</div>
+
+<!-- BILAH ATAS -->
+<header class="bilah">
+  <div class="bilah-wadah">
+    <div class="bilah-kiri">
+      <a class="btn-kembali" href="../../dashboard.html" title="Kembali ke Peta Kronik" aria-label="Kembali">←</a>
+      <div class="bilah-judul">
+        <strong id="bilah-judul">Jejak di Tepi Sungai</strong>
+        <small id="bilah-sub">🪨 Pra Sejarah</small>
+      </div>
+    </div>
+    <div class="bilah-kanan">
+      <button class="btn-ikon" id="btn-kodeks" title="Kodeks" aria-label="Buka Kodeks">📖</button>
+      <button class="btn-ikon opsional" id="btn-menu" title="Menu" aria-label="Menu">☰</button>
+    </div>
+  </div>
+
+  <div class="bar-wrap">
+    <div class="bar-label">
+      <span>Kemajuan Bab</span>
+      <span id="bar-persen">0%</span>
+    </div>
+    <div class="bar">
+      <div class="bar-isi" id="bar-isi"></div>
+    </div>
+  </div>
+</header>
+
+<!-- PANGGUNG -->
+<main class="panggung" id="panggung"></main>
+
+<!-- SCRIPT -->
+<script src="../../assets/js/core.js"></script>
+<script src="../../assets/js/data/manifest.js"></script>
+<script src="../../assets/js/data/kodeks.js"></script>
+<script src="../../assets/js/data/era-01-prasejarah.js"></script>
+
+<script>
+/* =========================================================
+   ENGINE BAB — Self-contained
+   ========================================================= */
+(function () {
+  "use strict";
+
+  const $  = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+  const kabur = (s) => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+  const eraId  = document.body.dataset.era;
+  const babId  = document.body.dataset.bab;
+  const panggung = $("#panggung");
+  const barIsi   = $("#bar-isi");
+  const barPersen = $("#bar-persen");
+
+  /* ================== STATE ================== */
+  let ERA = null, BAB = null;
+  let adegan = [], idx = 0;
+  let poinBab = 0, benarBab = 0, totalSoalBab = 0;
+
+  /* ================== LOADER ================== */
+  setTimeout(() => {
+    const l = $("#loader");
+    if (l) { l.classList.add("selesai"); document.body.classList.remove("no-scroll"); setTimeout(() => l.remove(), 600); }
+  }, 500);
+
+  /* ================== INIT ================== */
+  function init() {
+    try { if (typeof JN !== "undefined" && JN.muat) JN.muat(); } catch(e){}
+
+    ERA = window.ERA_DATA && window.ERA_DATA[eraId];
+    if (!ERA) return gagal("Data era '" + eraId + "' tidak ditemukan.");
+
+    BAB = (ERA.bab || []).find(b => b.id === babId);
+    if (!BAB) return gagal("Bab '" + babId + "' tidak ditemukan.");
+
+    adegan = BAB.adegan || [];
+    idx = 0;
+
+    document.title = BAB.judul + " — " + ERA.judul + " | Jejak Sejarah Nusantara";
+    $("#bilah-judul").textContent = BAB.judul;
+    $("#bilah-sub").textContent = (ERA.ikon || "📜") + " " + ERA.judul;
+
+    render();
+  }
+
+  function gagal(pesan) {
+    panggung.innerHTML =
+      '<div style="padding:60px 24px;text-align:center">' +
+      '<div style="font-size:3rem;margin-bottom:16px">⚠️</div>' +
+      '<h2 style="font-family:var(--ln-font-display);margin-bottom:12px">Ups, ada yang salah</h2>' +
+      '<p style="color:var(--ln-ink-2);margin-bottom:24px">' + kabur(pesan) + '</p>' +
+      '<a class="btn-tutup utama" href="../../dashboard.html">← Kembali ke Peta Kronik</a>' +
+      '</div>';
+  }
+
+  /* ================== PROGRES ================== */
+  function perbaruiProgres() {
+    const p = adegan.length ? Math.round(idx / adegan.length * 100) : 0;
+    barIsi.style.width = p + "%";
+    barPersen.textContent = p + "%";
+  }
+
+  /* ================== RENDER ================== */
+  function render() {
+    perbaruiProgres();
+    panggung.innerHTML = "";
+    if (idx >= adegan.length) return selesai();
+
+    const n = adegan[idx];
+    const fn = {
+      narasi:   nodeNarasi,
+      dialog:   nodeDialog,
+      kuis:     nodeKuis,
+      pilihan:  nodePilihan,
+      eksplor:  nodeEksplor,
+      refleksi: nodeRefleksi,
+      tutup:    nodeTutup
+    }[n.t];
+
+    if (!fn) { console.warn("Tipe adegan tidak dikenal:", n.t); return lanjut(); }
+    fn(n);
+  }
+
+  function lanjut() { idx++; render(); }
+
+  function tombolLanjut(teks) {
+    const b = document.createElement("button");
+    b.className = "tombol-lanjut";
+    b.innerHTML = '<span>' + (teks || "Lanjut") + '</span> <span>→</span>';
+    b.onclick = () => lanjut();
+    return b;
+  }
+
+  /* ================== NODE: NARASI ================== */
+  function nodeNarasi(n) {
+    const wrap = document.createElement("div");
+    wrap.className = "node";
+
+    const latarHTML = n.latar
+      ? '<div class="node-narasi-latar" aria-hidden="true">' + (ERA.ikon || "📜") + '</div>'
+      : "";
+
+    wrap.innerHTML =
+      latarHTML +
+      '<div class="panel-perkamen">' +
+        (n.judul ? '<div class="label-kecil">' + kabur(n.judul) + '</div>' : '') +
+        '<div class="narasi">' + n.teks + '</div>' +
+      '</div>';
+
+    panggung.appendChild(wrap);
+    if (n.efek) terapkanEfek(n.efek);
+    panggung.appendChild(tombolLanjut(n.tombol));
+  }
+
+  /* ================== NODE: DIALOG ================== */
+  function nodeDialog(n) {
+    const wrap = document.createElement("div");
+    wrap.className = "node";
+
+    const avatarHTML = n.potret
+      ? '<div class="dialog-avatar"><img src="' + n.potret + '" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>'
+      : '<div class="dialog-avatar">' + (n.emoji || "✨") + '</div>';
+
+    wrap.innerHTML =
+      '<div class="kartu-dialog">' +
+        avatarHTML +
+        '<div class="dialog-teks">' +
+          '<div class="dialog-npc">' + kabur(n.npc || "Seseorang") + '</div>' +
+          '<div class="narasi">' + n.teks + '</div>' +
+        '</div>' +
+      '</div>';
+
+    panggung.appendChild(wrap);
+    if (n.efek) terapkanEfek(n.efek);
+    panggung.appendChild(tombolLanjut(n.tombol));
+  }
+
+  /* ================== NODE: KUIS ================== */
+  function nodeKuis(n) {
+    totalSoalBab++;
+    const wrap = document.createElement("div");
+    wrap.className = "node";
+
+    wrap.innerHTML =
+      '<div class="kartu-kuis">' +
+        '<span class="chip-kuis">📝 Uji Pemahaman</span>' +
+        '<div class="pertanyaan">' + n.pertanyaan + '</div>' +
+        '<div class="opsi-wrap" id="opsi-wrap"></div>' +
+        '<div id="umpan-wrap"></div>' +
+      '</div>';
+
+    panggung.appendChild(wrap);
+
+    const opsiWrap = wrap.querySelector("#opsi-wrap");
+    const umpanWrap = wrap.querySelector("#umpan-wrap");
+    let terjawab = false;
+
+    n.opsi.forEach((teks, i) => {
+      const b = document.createElement("button");
+      b.className = "tombol-opsi";
+      b.innerHTML = '<span class="nomor">' + "ABCDEFG"[i] + '</span> <span>' + teks + '</span>';
+      b.onclick = () => {
+        if (terjawab) return;
+        terjawab = true;
+        const benar = i === n.jawaban;
+        if (benar) { benarBab++; poinBab += 10; b.classList.add("benar"); }
+        else {
+          b.classList.add("salah");
+          opsiWrap.children[n.jawaban].classList.add("benar");
+        }
+
+        if (typeof JN !== "undefined" && JN.catatAkurasi) JN.catatAkurasi(benar ? 1 : 0, 1);
+        if (n.efek) terapkanEfek(n.efek);
+
+        umpanWrap.innerHTML =
+          '<div class="umpan' + (benar ? "" : " salah") + '">' +
+            '<div class="label">' + (benar ? "✓ Tepat" : "✗ Belum Tepat") + '</div>' +
+            '<p>' + (n.penjelasan || "") + '</p>' +
+          '</div>';
+
+        const lb = tombolLanjut("Lanjut");
+        umpanWrap.appendChild(lb);
+      };
+      opsiWrap.appendChild(b);
+    });
+  }
+
+  /* ================== NODE: PILIHAN ================== */
+  function nodePilihan(n) {
+    const wrap = document.createElement("div");
+    wrap.className = "node";
+
+    wrap.innerHTML =
+      '<div class="kartu-pilihan">' +
+        '<div class="teks">' + n.teks + '</div>' +
+        '<div class="opsi-wrap" id="opsi-wrap"></div>' +
+        '<div id="umpan-wrap"></div>' +
+      '</div>';
+
+    panggung.appendChild(wrap);
+
+    const opsiWrap = wrap.querySelector("#opsi-wrap");
+    const umpanWrap = wrap.querySelector("#umpan-wrap");
+    let terjawab = false;
+
+    const urut = n.opsi.map((o, i) => ({ o, i })).sort(() => Math.random() - 0.5);
+
+    urut.forEach(({ o }) => {
+      const b = document.createElement("button");
+      b.className = "tombol-opsi";
+      b.innerHTML = '<span class="nomor">◆</span> <span>' + o.teks + '</span>';
+      b.onclick = () => {
+        if (terjawab) return;
+
+        if (o.benar) {
+          terjawab = true;
+          b.classList.add("benar");
+          if (o.efek) terapkanEfek(o.efek);
+
+          umpanWrap.innerHTML =
+            '<div class="umpan">' +
+              '<div class="label">✓ Tepat</div>' +
+              '<p>' + (o.umpanBalik || "Pilihanmu sesuai catatan sejarah.") + '</p>' +
+            '</div>';
+          umpanWrap.appendChild(tombolLanjut("Lanjut"));
+        } else {
+          b.classList.add("salah");
+          panggung.classList.add("anomali");
+          setTimeout(() => panggung.classList.remove("anomali"), 600);
+
+          umpanWrap.innerHTML =
+            '<div class="umpan salah">' +
+              '<div class="label">⚠ Anomali Kronik</div>' +
+              '<p>' + (o.umpanBalik || "Itu tidak sesuai dengan catatan sejarah.") + '</p>' +
+            '</div>';
+          setTimeout(() => {
+            b.classList.remove("salah");
+            umpanWrap.innerHTML = "";
+          }, 2400);
+        }
+      };
+      opsiWrap.appendChild(b);
+    });
+  }
+
+  /* ================== NODE: EKSPLOR ================== */
+  function nodeEksplor(n) {
+    const wrap = document.createElement("div");
+    wrap.className = "node";
+
+    wrap.innerHTML =
+      '<div class="kartu-eksplor">' +
+        '<div class="eksplor-head">' +
+          '<span class="chip-kuis">🔍 Eksplorasi</span>' +
+          '<span class="eksplor-hit"><strong id="hit">0</strong> / ' + n.hotspot.length + ' ditemukan</span>' +
+        '</div>' +
+        '<div class="instruksi">' + (n.instruksi || "Sentuh bagian gambar untuk memeriksa.") + '</div>' +
+        '<div class="peta-eksplor" id="peta">🗺️</div>' +
+        '<div class="hasil-eksplor" id="hasil"></div>' +
+      '</div>';
+
+    panggung.appendChild(wrap);
+
+    const peta = wrap.querySelector("#peta");
+    const hasil = wrap.querySelector("#hasil");
+    const hitEl = wrap.querySelector("#hit");
+    let ketemu = 0;
+
+    n.hotspot.forEach(h => {
+      const t = document.createElement("button");
+      t.className = "hotspot";
+      t.style.left = h.x + "%";
+      t.style.top = h.y + "%";
+      t.textContent = "?";
+      t.title = "Periksa titik ini";
+      t.onclick = () => {
+        if (t.dataset.selesai) return;
+        t.dataset.selesai = "1";
+        t.classList.add("selesai");
+        t.textContent = "✓";
+        ketemu++;
+        hitEl.textContent = ketemu;
+
+        if (h.efek) terapkanEfek(h.efek);
+
+        const k = document.createElement("div");
+        k.className = "kartu-hasil";
+        k.innerHTML =
+          '<div class="judul">' + kabur(h.judul) + '</div>' +
+          '<div class="teks">' + h.teks + '</div>';
+        hasil.appendChild(k);
+
+        if (ketemu === n.hotspot.length) {
+          hasil.appendChild(tombolLanjut("Lanjut"));
+        }
+      };
+      peta.appendChild(t);
+    });
+  }
+
+  /* ================== NODE: REFLEKSI ================== */
+  function nodeRefleksi(n) {
+    const wrap = document.createElement("div");
+    wrap.className = "node";
+
+    const min = n.minKarakter || 50;
+
+    wrap.innerHTML =
+      '<div class="kartu-refleksi">' +
+        '<span class="chip-kuis">✍️ Jurnal Refleksi</span>' +
+        '<div class="pertanyaan">' + n.pertanyaan + '</div>' +
+        '<textarea id="jawab" placeholder="Tulis pendapatmu di sini..." rows="6"></textarea>' +
+        '<div class="refleksi-info">' +
+          '<span><strong id="jml">0</strong> / ' + min + ' karakter</span>' +
+          '<span>Tidak ada jawaban salah di sini</span>' +
+        '</div>' +
+        '<div id="umpan-wrap"></div>' +
+      '</div>';
+
+    panggung.appendChild(wrap);
+
+    const ta = wrap.querySelector("#jawab");
+    const jml = wrap.querySelector("#jml");
+    const umpanWrap = wrap.querySelector("#umpan-wrap");
+
+    ta.addEventListener("input", () => { jml.textContent = ta.value.trim().length; });
+
+    const kirim = document.createElement("button");
+    kirim.className = "tombol-lanjut";
+    kirim.innerHTML = '<span>Simpan Refleksi</span> <span>✓</span>';
+    kirim.onclick = () => {
+      const isi = ta.value.trim();
+      if (isi.length < min) {
+        if (typeof JN !== "undefined" && JN.toast) {
+          JN.toast("✍️", "Terlalu singkat", "Tulis minimal " + min + " karakter ya.", 3000);
+        } else {
+          alert("Tulis minimal " + min + " karakter.");
+        }
+        ta.focus();
+        return;
+      }
+      if (typeof JN !== "undefined" && JN.tambahJurnal) {
+        JN.tambahJurnal(eraId, babId, n.pertanyaan, isi);
+        JN.tambahEmpati(5);
+      }
+      poinBab += 10;
+
+      umpanWrap.innerHTML =
+        '<div class="umpan">' +
+          '<div class="label">✓ Tersimpan di Jurnal</div>' +
+          '<p>' + (n.respons || "Refleksimu tercatat.") + '</p>' +
+        '</div>';
+
+      umpanWrap.appendChild(tombolLanjut("Lanjut"));
+      kirim.remove();
+      ta.disabled = true;
+    };
+    wrap.appendChild(kirim);
+  }
+
+  /* ================== NODE: TUTUP ================== */
+  function nodeTutup(n) {
+    const wrap = document.createElement("div");
+    wrap.className = "node";
+
+    wrap.innerHTML =
+      '<div class="kartu-tutup">' +
+        '<div class="tutup-ikon">🔮</div>' +
+        '<div class="label-kecil">Pecahan Kronik Ditemukan</div>' +
+        '<h2>' + kabur(n.judul || BAB.judul) + '</h2>' +
+        '<div class="narasi">' + (n.teks || "") + '</div>' +
+        '<div class="poin-box">' +
+          '<span class="chip-poin">🪙 <strong>' + poinBab + '</strong> Poin Kronik</span>' +
+          '<span class="chip-poin">✅ <strong>' + benarBab + '/' + totalSoalBab + '</strong> Akurasi</span>' +
+        '</div>' +
+        '<div class="tutup-aksi">' +
+          '<a class="btn-tutup utama" href="../../dashboard.html">🗺️ Kembali ke Peta Kronik</a>' +
+        '</div>' +
+      '</div>';
+
+    panggung.appendChild(wrap);
+    if (n.efek) terapkanEfek(n.efek);
+    idx = adegan.length;
+    perbaruiProgres();
+  }
+
+  /* ================== SELESAI ================== */
+  function selesai() {
+    if (typeof JN !== "undefined" && JN.tandaiBabSelesai) {
+      JN.tandaiBabSelesai(eraId, babId, poinBab);
+    }
+    if (typeof JN !== "undefined" && JN.bukaEra) {
+      JN.bukaEra("era01");
+    }
+
+    panggung.innerHTML =
+      '<div class="node">' +
+        '<div class="kartu-tutup">' +
+          '<div class="tutup-ikon">🏆</div>' +
+          '<div class="label-kecil">Bab Selesai</div>' +
+          '<h2>Selamat!</h2>' +
+          '<div class="narasi">Kamu telah menyelesaikan bab ini. ' +
+          '<em>Perjalanan masih panjang — sepuluh zaman menanti.</em></div>' +
+          '<div class="poin-box">' +
+            '<span class="chip-poin">🪙 <strong>' + poinBab + '</strong> Poin</span>' +
+            '<span class="chip-poin">✅ <strong>' + benarBab + '/' + totalSoalBab + '</strong> Akurasi</span>' +
+          '</div>' +
+          '<div class="tutup-aksi">' +
+            '<a class="btn-tutup utama" href="../../dashboard.html">🗺️ Peta Kronik</a>' +
+            '<a class="btn-tutup garis" href="../../kodeks.html">📖 Kodeks</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  /* ================== EFEK ================== */
+  function terapkanEfek(efek) {
+    if (typeof JN !== "undefined" && JN.terapkanEfek) {
+      try { JN.terapkanEfek(efek); } catch(e) { console.warn(e); }
+    }
+  }
+
+  /* ================== TOMBOL KODEKS ================== */
+  $("#btn-kodeks").addEventListener("click", () => {
+    window.location.href = "../../kodeks.html";
+  });
+
+  /* ================== TOMBOL MENU ================== */
+  $("#btn-menu").addEventListener("click", () => {
+    const modal = document.createElement("div");
+    modal.className = "modal-latar";
+    modal.innerHTML =
+      '<div class="modal">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
+          '<h3 style="margin:0">☰ Menu</h3>' +
+          '<button class="btn-ikon" id="tutup-modal">✕</button>' +
+        '</div>' +
+        '<div style="display:flex;flex-direction:column;gap:8px">' +
+          '<a class="btn-tutup garis" style="justify-content:flex-start" href="../../dashboard.html">🗺️ Peta Kronik</a>' +
+          '<a class="btn-tutup garis" style="justify-content:flex-start" href="../../kodeks.html">📖 Kodeks</a>' +
+          '<a class="btn-tutup garis" style="justify-content:flex-start" href="../../jurnal.html">✍️ Jurnal</a>' +
+          '<a class="btn-tutup garis" style="justify-content:flex-start" href="../../rapor.html">📊 Rapor</a>' +
+          '<button class="btn-tutup garis" id="ulang-bab" style="justify-content:flex-start">🔄 Ulangi Bab Ini</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    const tutup = () => modal.remove();
+    modal.querySelector("#tutup-modal").onclick = tutup;
+    modal.onclick = e => { if (e.target === modal) tutup(); };
+    modal.querySelector("#ulang-bab").onclick = () => {
+      if (confirm("Ulangi bab ini dari awal?")) {
+        idx = 0; poinBab = 0; benarBab = 0; totalSoalBab = 0;
+        tutup(); render();
+      }
+    };
+    document.addEventListener("keydown", function esc(e){
+      if (e.key === "Escape") { tutup(); document.removeEventListener("keydown", esc); }
+    });
+  });
+
+  /* ================== JALANKAN ================== */
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+
+</body>
+</html>

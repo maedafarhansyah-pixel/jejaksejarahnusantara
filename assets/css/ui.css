@@ -1,0 +1,243 @@
+/* =========================================================
+   ui.css — Tombol, Kartu, Modal, Toast, Chip
+   Jejak Sejarah Nusantara
+   ========================================================= */
+
+/* ============ TOMBOL ============ */
+.tombol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: .95rem;
+  letter-spacing: .02em;
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.tombol:active { transform: scale(.97); }
+
+.tombol-utama {
+  background: linear-gradient(135deg, var(--emas), var(--emas-2));
+  color: #221c05;
+  box-shadow: 0 6px 20px rgba(201,162,39,.32);
+}
+.tombol-utama:hover {
+  box-shadow: 0 8px 28px rgba(201,162,39,.5);
+  text-decoration: none;
+}
+
+.tombol-aksen {
+  background: linear-gradient(135deg, #2f8b84, var(--aksen));
+  color: #04201e;
+}
+
+.tombol-garis {
+  border-color: var(--garis);
+  background: var(--bg-2);
+  color: var(--teks);
+}
+.tombol-garis:hover {
+  border-color: var(--emas);
+  color: var(--emas-2);
+  text-decoration: none;
+}
+
+.tombol-hantu {
+  color: var(--teks-2);
+  padding: 10px 16px;
+}
+.tombol-hantu:hover {
+  color: var(--teks);
+  background: var(--bg-2);
+  border-radius: 100px;
+  text-decoration: none;
+}
+
+.tombol:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+  transform: none;
+}
+.tombol-lebar { width: 100%; }
+
+/* ============ TOMBOL OPSI (pilihan jawaban) ============ */
+.tombol-opsi {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 16px 20px;
+  border-radius: var(--r);
+  border: 1.5px solid var(--garis);
+  background: var(--bg-2);
+  color: var(--teks);
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: all .16s ease;
+}
+.tombol-opsi:hover:not(:disabled) {
+  border-color: var(--emas);
+  background: var(--bg-3);
+  transform: translateX(4px);
+}
+.tombol-opsi .nomor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--bg-3);
+  border: 1px solid var(--garis);
+  font-size: .78rem;
+  font-weight: 700;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+.tombol-opsi.benar {
+  border-color: #3f9e5f;
+  background: rgba(63,158,95,.14);
+}
+.tombol-opsi.salah {
+  border-color: var(--merah);
+  background: rgba(180,67,47,.14);
+}
+.tombol-opsi.benar .nomor { background: #3f9e5f; border-color: #3f9e5f; color: #fff; }
+.tombol-opsi.salah .nomor { background: var(--merah); border-color: var(--merah); color: #fff; }
+
+/* ============ BILAH ATAS ============ */
+.bilah-atas {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(14,17,22,.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--garis);
+  padding: 10px 0;
+}
+.bilah-atas .wadah {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.judul-bilah {
+  font-family: var(--font-narasi);
+  font-size: 1rem;
+  font-weight: 700;
+}
+.sub-bilah {
+  font-size: .74rem;
+  color: var(--teks-2);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* ============ BAR PROGRES ============ */
+.bar {
+  height: 8px;
+  background: var(--bg-3);
+  border-radius: 100px;
+  overflow: hidden;
+  border: 1px solid var(--garis);
+}
+.bar-isi {
+  height: 100%;
+  background: linear-gradient(90deg, var(--emas), var(--emas-2));
+  border-radius: 100px;
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+}
+
+/* ============ TOAST ============ */
+#toast-wadah {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(92vw, 420px);
+  pointer-events: none;
+}
+.toast {
+  background: var(--bg-3);
+  border: 1px solid var(--emas);
+  border-left: 5px solid var(--emas);
+  border-radius: var(--r-sm);
+  padding: 14px 18px;
+  box-shadow: var(--shadow);
+  animation: munculAtas .3s ease both;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  pointer-events: auto;
+}
+.toast .ikon { font-size: 1.4rem; line-height: 1; }
+.toast .judul {
+  font-weight: 700;
+  font-size: .85rem;
+  color: var(--emas-2);
+}
+.toast .isi {
+  font-size: .88rem;
+  color: var(--teks-2);
+}
+
+/* ============ MODAL ============ */
+.modal-latar {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: rgba(5,7,10,.78);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  animation: munculAtas .25s ease both;
+}
+.modal {
+  background: var(--bg-2);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-lg);
+  padding: 28px;
+  width: min(100%, 560px);
+  max-height: 86vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+}
+
+/* ============ CHIP / LENCANA ============ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 13px;
+  border-radius: 100px;
+  background: var(--bg-3);
+  border: 1px solid var(--garis);
+  font-size: .76rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--teks);
+}
+.chip-emas {
+  border-color: var(--emas);
+  color: var(--emas-2);
+}
+.chip-aksen {
+  border-color: var(--aksen);
+  color: var(--aksen);
+}
+
+/* ============ GRID ============ */
+.grid { display: grid; gap: 16px; }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }

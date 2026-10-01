@@ -1,162 +1,854 @@
-===============================================.txt
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0e1116" />
+
+<!-- ===== SEO ===== -->
+<title>Jejak Sejarah Nusantara — Petualangan Sejarah Indonesia</title>
+<meta name="description"
+      content="Petualangan sejarah Indonesia dari pra sejarah hingga masa kini. Susun 10 pecahan kronik, jelajahi 47 bab, dan belajar sejarah dengan mengalaminya langsung." />
+<meta name="author" content="Jejak Sejarah Nusantara" />
+<meta name="keywords"
+      content="game sejarah, sejarah indonesia, media pembelajaran, game edukasi, sejarah smp, sejarah sma" />
+
+<!-- ===== Open Graph ===== -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Jejak Sejarah Nusantara — Sepuluh Zaman, Satu Kronik" />
+<meta property="og:description"
+      content="Petualangan sejarah Indonesia dari pra sejarah hingga masa kini. Belajar sejarah dengan mengalaminya langsung." />
+<meta property="og:image" content="assets/img/og-image.jpg" />
+<meta property="og:locale" content="id_ID" />
+
+<!-- ===== Twitter Card ===== -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Jejak Sejarah Nusantara" />
+<meta name="twitter:description"
+      content="Petualangan sejarah Indonesia dalam 10 zaman. Gratis, tanpa install." />
+<meta name="twitter:image" content="assets/img/og-image.jpg" />
+
+<!-- ===== Icon ===== -->
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="assets/img/icon-192.png" />
+
+<!-- ===== Stylesheet ===== -->
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/ui.css" />
+
+<!-- ===== Gaya khusus landing ===== -->
+<style>
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 80px 0 60px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 22%, rgba(201,162,39,.18), transparent 58%),
+      radial-gradient(circle at 15% 90%, rgba(63,169,160,.10), transparent 55%),
+      radial-gradient(circle at 88% 82%, rgba(180,67,47,.08), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero > * { position: relative; z-index: 1; }
+
+  .lambang {
+    font-size: clamp(2.6rem, 7vw, 4rem);
+    line-height: 1;
+    margin-bottom: 18px;
+    animation: denyutLambang 4s ease-in-out infinite;
+  }
+  @keyframes denyutLambang {
+    0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 18px rgba(201,162,39,.4)); }
+    50%      { transform: scale(1.06) rotate(-2deg); filter: drop-shadow(0 0 32px rgba(201,162,39,.7)); }
+  }
+
+  .judul-besar {
+    font-size: clamp(2.1rem, 6.8vw, 4.6rem);
+    line-height: 1.03;
+    letter-spacing: -0.02em;
+    background: linear-gradient(180deg, #ffffff 25%, var(--emas-2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+    font-family: var(--font-narasi);
+    font-weight: 800;
+  }
+  .judul-besar span { display: block; }
+
+  .tagline {
+    font-family: var(--font-narasi);
+    font-size: clamp(1rem, 2.4vw, 1.35rem);
+    font-style: italic;
+    color: var(--emas-2);
+    letter-spacing: .02em;
+    margin-top: 14px;
+  }
+
+  .deskripsi-hero {
+    max-width: 640px;
+    margin: 24px auto 0;
+    font-size: clamp(.98rem, 2vw, 1.1rem);
+    line-height: 1.75;
+    color: var(--teks-2);
+  }
+
+  /* ============ TOMBOL CTA ============ */
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 34px;
+  }
+  .cta .tombol { padding: 16px 34px; font-size: 1rem; }
+
+  /* ============ CHIP INFO ============ */
+  .chip-baris {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  /* ============ SECTION UMUM ============ */
+  .section {
+    padding: 78px 0;
+    position: relative;
+  }
+  .section-kepala {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+  .section-kepala h2 {
+    margin-top: 6px;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+  }
+  .section-kepala p {
+    max-width: 600px;
+    margin: 12px auto 0;
+    color: var(--teks-2);
+    line-height: 1.7;
+  }
+
+  /* ============ KARTU ERA (Linimasa) ============ */
+  .kartu-era {
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    gap: 16px;
+    align-items: start;
+    padding: 18px;
+    border-radius: var(--r);
+    background: linear-gradient(150deg, var(--bg-2), var(--bg-3));
+    border: 1px solid var(--garis);
+    border-left: 4px solid var(--warna, var(--emas));
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .kartu-era::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 100% 0%, rgba(201,162,39,.08), transparent 45%);
+    opacity: 0;
+    transition: opacity .22s ease;
+    pointer-events: none;
+  }
+  .kartu-era:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(0,0,0,.5);
+    border-color: var(--warna, var(--emas));
+  }
+  .kartu-era:hover::before { opacity: 1; }
+
+  .kartu-era .ikon-era {
+    width: 58px; height: 58px;
+    display: grid; place-items: center;
+    font-size: 1.85rem;
+    border-radius: 14px;
+    background: var(--bg);
+    border: 1.5px solid var(--garis);
+    flex-shrink: 0;
+  }
+  .kartu-era .nomor-era {
+    position: absolute;
+    top: 14px; right: 16px;
+    font-family: var(--font-narasi);
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: rgba(255,255,255,.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .kartu-era h3 {
+    font-size: 1.05rem;
+    margin: 4px 0 0;
+    position: relative;
+    z-index: 1;
+  }
+  .kartu-era .periode {
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--emas-2);
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+  }
+  .kartu-era p {
+    font-size: .88rem;
+    color: var(--teks-2);
+    margin: 8px 0 0;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ============ FITUR ============ */
+  .kartu-fitur {
+    padding: 26px 22px;
+    border-radius: var(--r);
+    background: linear-gradient(160deg, var(--bg-2), var(--bg-3));
+    border: 1px solid var(--garis);
+    transition: transform .22s ease, border-color .22s ease;
+    height: 100%;
+  }
+  .kartu-fitur:hover {
+    transform: translateY(-5px);
+    border-color: var(--emas);
+  }
+  .kartu-fitur .ikon-fitur {
+    width: 52px; height: 52px;
+    display: grid; place-items: center;
+    font-size: 1.65rem;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(201,162,39,.14), rgba(201,162,39,.03));
+    border: 1px solid rgba(201,162,39,.3);
+    margin-bottom: 16px;
+  }
+  .kartu-fitur h3 {
+    font-size: 1.05rem;
+    margin: 0 0 8px;
+  }
+  .kartu-fitur p {
+    font-size: .9rem;
+    color: var(--teks-2);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ============ LANGKAH / CARA MAIN ============ */
+  .langkah {
+    display: grid;
+    grid-template-columns: 46px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .langkah .angka {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--font-narasi);
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--emas-2);
+    background: var(--bg);
+    border: 1.5px solid var(--emas);
+    flex-shrink: 0;
+  }
+  .langkah h3 { font-size: 1rem; margin: 6px 0 6px; }
+  .langkah p { font-size: .9rem; color: var(--teks-2); margin: 0; line-height: 1.65; }
+
+  /* ============ KUTIPAN ============ */
+  .kutipan {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 44px 24px;
+    border-top: 1px solid var(--garis);
+    border-bottom: 1px solid var(--garis);
+    position: relative;
+  }
+  .kutipan::before,
+  .kutipan::after {
+    content: '"';
+    position: absolute;
+    font-family: var(--font-narasi);
+    font-size: 5rem;
+    color: var(--emas);
+    opacity: .25;
+    line-height: 1;
+  }
+  .kutipan::before { top: 10px; left: 20px; }
+  .kutipan::after  { bottom: -14px; right: 20px; }
+  .kutipan p {
+    font-family: var(--font-narasi);
+    font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+    font-style: italic;
+    line-height: 1.75;
+    color: var(--teks);
+  }
+  .kutipan footer {
+    margin-top: 14px;
+    font-size: .82rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--emas-2);
+    font-weight: 600;
+  }
+
+  /* ============ CTA BAWAH ============ */
+  .cta-bawah {
+    text-align: center;
+    padding: 66px 24px;
+    border-radius: var(--r-lg);
+    background:
+      radial-gradient(circle at 50% 0%, rgba(201,162,39,.15), transparent 65%),
+      linear-gradient(160deg, var(--bg-2), var(--bg-3));
+    border: 1px solid var(--garis);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bawah::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(201,162,39,.06), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(63,169,160,.06), transparent 40%);
+    pointer-events: none;
+  }
+  .cta-bawah > * { position: relative; z-index: 1; }
+
+  /* ============ SCROLL REVEAL ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.tampil { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .lambang { animation: none; }
+  }
+
+  /* ============ RESPONSIF ============ */
+  @media (max-width: 640px) {
+    .hero { min-height: auto; padding: 56px 0 40px; }
+    .cta .tombol { padding: 14px 26px; font-size: .95rem; width: 100%; max-width: 320px; }
+    .section { padding: 56px 0; }
+    .kartu-era { grid-template-columns: 48px 1fr; gap: 12px; padding: 14px; }
+    .kartu-era .ikon-era { width: 48px; height: 48px; font-size: 1.5rem; }
+    .kartu-era .nomor-era { font-size: 1.9rem; }
+    .kutipan { padding: 34px 16px; }
+    .cta-bawah { padding: 48px 18px; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGASI ATAS
+     ═══════════════════════════════════════════ -->
+<header class="bilah-atas">
+  <div class="wadah">
+    <div class="baris" style="min-width:0">
+      <span aria-hidden="true" style="font-size:1.4rem">📜</span>
+      <div style="min-width:0">
+        <div class="judul-bilah">Jejak Sejarah Nusantara</div>
+        <div class="sub-bilah">Sepuluh Zaman, Satu Kronik</div>
+      </div>
+    </div>
+
+    <nav class="baris" aria-label="Menu utama" id="nav-utama">
+      <a class="tombol tombol-hantu" href="#linimasa">Zaman</a>
+      <a class="tombol tombol-hantu" href="#fitur">Fitur</a>
+      <a class="tombol tombol-hantu" href="#cara">Cara Main</a>
+      <a class="tombol tombol-garis" href="dashboard.html">Masuk →</a>
+    </nav>
+  </div>
+</header>
+
+
+<main>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════ -->
+  <section class="hero" id="beranda">
+    <div class="wadah tumpuk-6">
+
+      <div class="tumpuk-2">
+        <div class="lambang" aria-hidden="true">📜🧭</div>
+
+        <span class="label-kecil">Petualangan Sejarah Indonesia</span>
+
+        <h1 class="judul-besar">
+          <span>Jejak</span>
+          <span>Sejarah</span>
+          <span>Nusantara</span>
+        </h1>
+
+        <p class="tagline">— Sepuluh Zaman, Satu Kronik —</p>
+
+        <p class="deskripsi-hero">
+          Petualangan sejarah Indonesia dari pra sejarah hingga masa kini.
+          Susun 10 pecahan kronik, jelajahi 47 bab, dan belajar sejarah
+          dengan mengalaminya langsung.
+        </p>
+      </div>
+
+      <!-- Tombol aksi -->
+      <div class="cta">
+        <a class="tombol tombol-utama" id="btn-mulai" href="dashboard.html">
+          ▶ Mulai Petualangan
+        </a>
+        <a class="tombol tombol-garis tersembunyi" id="btn-lanjut" href="dashboard.html">
+          ↻ Lanjutkan Perjalanan
+        </a>
+        <a class="tombol tombol-hantu" href="#linimasa">
+          Lihat 10 Zaman ↓
+        </a>
+      </div>
+
+      <!-- Chip info -->
+      <div class="chip-baris">
+        <span class="chip chip-emas">🕰️ 10 Zaman</span>
+        <span class="chip">📖 47 Bab</span>
+        <span class="chip">🧩 Puzzle &amp; Dilema</span>
+        <span class="chip chip-aksen">📱 Tanpa Install</span>
+        <span class="chip">🎓 SMP – SMA</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       KUTIPAN PEMBUKA
+       ═══════════════════════════════════════════ -->
+  <section class="wadah" style="padding: 40px 0">
+    <div class="kutipan reveal">
+      <p>
+        Sebuah kronik kuno terpecah menjadi sepuluh zaman. Kamu satu-satunya
+        yang bisa menyusunnya kembali — dari gua-gua prasejarah hingga
+        layar digital masa kini.
+      </p>
+      <footer>— Kronik Nusantara</footer>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       LINIMASA 10 ZAMAN
+       ═══════════════════════════════════════════ -->
+  <section class="section" id="linimasa">
+    <div class="wadah">
+
+      <div class="section-kepala reveal">
+        <span class="label-kecil">Peta Perjalanan</span>
+        <h2>Sepuluh Zaman yang Menanti</h2>
+        <p>
+          Setiap zaman punya tokoh, dilema, dan pecahan kroniknya sendiri.
+          Selesaikan satu zaman untuk membuka zaman berikutnya.
+        </p>
+      </div>
+
+      <div class="grid grid-2" id="daftar-era" role="list">
+        <!-- Diisi oleh JavaScript dari manifest.js -->
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       FITUR UNGGULAN
+       ═══════════════════════════════════════════ -->
+  <section class="section" id="fitur" style="background: linear-gradient(180deg, transparent, rgba(21,26,34,.5), transparent)">
+    <div class="wadah">
+
+      <div class="section-kepala reveal">
+        <span class="label-kecil">Mengapa Berbeda</span>
+        <h2>Belajar dengan Mengalami</h2>
+        <p>
+          Bukan sekadar membaca atau menghafal — setiap bab mengajakmu
+          berpikir, memilih, dan merasakan.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+
+        <article class="kartu-fitur reveal">
+          <div class="ikon-fitur" aria-hidden="true">📖</div>
+          <h3>Kodeks Terkumpul</h3>
+          <p>
+            Setiap tokoh, tempat, dan istilah yang kamu temui otomatis
+            tercatat menjadi ensiklopedia pribadimu — lengkap dengan sumbernya.
+          </p>
+        </article>
+
+        <article class="kartu-fitur reveal">
+          <div class="ikon-fitur" aria-hidden="true">⚠️</div>
+          <h3>Anomali Waktu</h3>
+          <p>
+            Sejarah tidak bisa diubah. Pilihan yang keliru memunculkan anomali —
+            dan penjelasan mengapa itu tidak sesuai fakta sejarah.
+          </p>
+        </article>
+
+        <article class="kartu-fitur reveal">
+          <div class="ikon-fitur" aria-hidden="true">✍️</div>
+          <h3>Jurnal Refleksi</h3>
+          <p>
+            Di akhir tiap bab, kamu menuliskan pendapatmu.
+            Bisa dicetak sebagai rapor untuk guru.
+          </p>
+        </article>
+
+        <article class="kartu-fitur reveal">
+          <div class="ikon-fitur" aria-hidden="true">🧩</div>
+          <h3>Bukan Sekadar Kuis</h3>
+          <p>
+            Eksplorasi gambar bersejarah, susun kronologi peristiwa,
+            pecahkan dilema tokoh, dan berdebat dengan tokoh masa lalu.
+          </p>
+        </article>
+
+        <article class="kartu-fitur reveal">
+          <div class="ikon-fitur" aria-hidden="true">🎯</div>
+          <h3>Tiga Pilar Penilaian</h3>
+          <p>
+            Poin Kronik, Akurasi Sejarah, dan Kedalaman Empati —
+            bukan hanya benar-salah, tetapi juga seberapa dalam kamu memahami.
+          </p>
+        </article>
+
+        <article class="kartu-fitur reveal">
+          <div class="ikon-fitur" aria-hidden="true">📱</div>
+          <h3>Ringan &amp; Tanpa Install</h3>
+          <p>
+            Berbasis HTML murni tanpa framework. Jalan di HP lama,
+            bisa dibuka tanpa koneksi setelah dimuat sekali.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       CARA MAIN
+       ═══════════════════════════════════════════ -->
+  <section class="section" id="cara">
+    <div class="wadah">
+
+      <div class="section-kepala reveal">
+        <span class="label-kecil">Panduan Singkat</span>
+        <h2>Cara Memulai Petualangan</h2>
+      </div>
+
+      <div class="grid grid-2" style="gap: 26px">
+
+        <div class="langkah reveal">
+          <div class="angka">1</div>
+          <div>
+            <h3>Mulai dari Zaman Pertama</h3>
+            <p>
+              Buka <strong>Peta Kronik</strong> dan sentuh lingkaran emas
+              "Zaman Pra Sejarah". Perjalananmu dimulai dari Sangiran,
+              sejuta tahun yang lalu.
+            </p>
+          </div>
+        </div>
+
+        <div class="langkah reveal">
+          <div class="angka">2</div>
+          <div>
+            <h3>Jelajahi, Bukan Hafalkan</h3>
+            <p>
+              Periksa setiap titik di gambar, baca dialog tokoh,
+              dan pilih jawaban yang menurutmu sesuai dengan fakta sejarah.
+            </p>
+          </div>
+        </div>
+
+        <div class="langkah reveal">
+          <div class="angka">3</div>
+          <div>
+            <h3>Kumpulkan Pecahan Kronik</h3>
+            <p>
+              Selesaikan setiap bab untuk mendapatkan satu pecahan kronik.
+              Kumpulkan semua pecahan dalam satu zaman untuk membuka zaman berikutnya.
+            </p>
+          </div>
+        </div>
+
+        <div class="langkah reveal">
+          <div class="angka">4</div>
+          <div>
+            <h3>Tulis Jurnal Refleksi</h3>
+            <p>
+              Di akhir bab, tuliskan pendapatmu tentang zamannya.
+              Semua refleksimu tersimpan dan bisa dicetak sebagai rapor untuk gurumu.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       CTA BAWAH
+       ═══════════════════════════════════════════ -->
+  <section class="wadah" style="padding-bottom: 80px">
+    <div class="cta-bawah reveal">
+
+      <div style="font-size: 3rem; margin-bottom: 12px" aria-hidden="true">🔮</div>
+
+      <span class="label-kecil">Kronik Menanti</span>
+
+      <h2 style="margin-top: 12px">
+        Siap Memulai Perjalananmu?
+      </h2>
+
+      <p style="max-width: 520px; margin: 14px auto 0; color: var(--teks-2); line-height: 1.7">
+        Sepuluh zaman menanti untuk dijelajahi. Ambil pena, buka kronik,
+        dan susun kembali sejarah bangsamu.
+      </p>
+
+      <div class="baris bungkus" style="justify-content: center; gap: 12px; margin-top: 28px">
+        <a class="tombol tombol-utama" href="dashboard.html" style="padding: 15px 32px">
+          ▶ Mulai Sekarang
+        </a>
+        <a class="tombol tombol-garis" href="tentang.html" style="padding: 15px 32px">
+          📖 Pelajari Dulu
+        </a>
+      </div>
+
+      <p style="margin-top: 22px; font-size: .82rem; color: var(--teks-2)">
+        Gratis · Tanpa akun · Tanpa install · Bisa dimainkan di HP
+      </p>
+
+    </div>
+  </section>
+
+</main>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════ -->
+<footer style="border-top: 1px solid var(--garis); padding: 40px 0 32px; margin-top: 20px">
+  <div class="wadah tumpuk-4">
+
+    <div class="baris-antara bungkus" style="gap: 20px">
+
+      <div style="min-width: 220px">
+        <div class="baris" style="margin-bottom: 8px">
+          <span style="font-size: 1.3rem">📜</span>
+          <strong style="font-family: var(--font-narasi); font-size: 1.05rem">
+            Jejak Sejarah Nusantara
+          </strong>
+        </div>
+        <p style="font-size: .85rem; color: var(--teks-2); line-height: 1.6; margin: 0">
+          Media pembelajaran sejarah Indonesia<br>
+          untuk siswa SMP &amp; SMA.
+        </p>
+      </div>
+
+      <nav class="baris bungkus" style="gap: 22px; font-size: .88rem" aria-label="Menu footer">
+        <div class="tumpuk-2">
+          <strong style="font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--teks-2)">Game</strong>
+          <a href="dashboard.html">Peta Kronik</a>
+          <a href="kodeks.html">Kodeks</a>
+          <a href="jurnal.html">Jurnal</a>
+        </div>
+        <div class="tumpuk-2">
+          <strong style="font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--teks-2)">Info</strong>
+          <a href="tentang.html">Tentang</a>
+          <a href="sumber.html">Sumber &amp; Lisensi</a>
+          <a href="pengaturan.html">Pengaturan</a>
+        </div>
+        <div class="tumpuk-2">
+          <strong style="font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--teks-2)">Untuk Guru</strong>
+          <a href="rapor.html">Rapor Siswa</a>
+          <a href="panduan-guru.html">Panduan Guru</a>
+        </div>
+      </nav>
+
+    </div>
+
+    <hr class="pemisah" />
+
+    <div class="baris-antara bungkus" style="gap: 12px; font-size: .82rem; color: var(--teks-2)">
+      <span>
+        © <span id="tahun">2025</span> Jejak Sejarah Nusantara — Dibuat untuk pendidikan.
+      </span>
+      <span>
+        Dibangun dengan HTML, CSS &amp; JavaScript murni.
+      </span>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════
+     SKRIP
+     ═══════════════════════════════════════════ -->
+<script src="assets/js/core.js"></script>
+<script src="assets/js/data/manifest.js"></script>
+
+<script>
 /* =========================================================
-   era-01-prasejarah.js — Data Cerita Era 1: Pra Sejarah
-   Jejak Sejarah Nusantara
+   LOGIKA LANDING PAGE
    ========================================================= */
+(function () {
+  "use strict";
 
-window.ERA_DATA = window.ERA_DATA || {};
+  /* ---------- Tahun di footer ---------- */
+  document.getElementById("tahun").textContent = new Date().getFullYear();
 
-window.ERA_DATA.era01 = {
-  id: "era01",
-  judul: "Pra Sejarah",
-  periode: "± 1.000.000 SM – 300 M",
-  ikon: "🪨",
-  warna: "#8a7a5c",
-  musik: "assets/audio/bgm/era-01.mp3",
+  /* ---------- Deteksi save yang ada ---------- */
+  try {
+    if (typeof JN !== "undefined" && JN.adaSave()) {
+      const s = JN.muat();
 
-  bab: [
-    /* ==================== BAB 1 ==================== */
-    {
-      id: "bab1",
-      judul: "Jejak di Tepi Sungai",
-      ringkas: "Menelusuri lapisan tanah Sangiran tempat manusia purba pernah hidup.",
-      latar: "assets/img/era-01/bab1-sangiran.jpg",
+      const btnMulai  = document.getElementById("btn-mulai");
+      const btnLanjut = document.getElementById("btn-lanjut");
 
-      adegan: [
-        /* --- 1. Narasi Pembuka --- */
-        {
-          t: "narasi",
-          judul: "Kronik Retak",
-          teks:
-            "Kamu membuka <em>Kronik Nusantara</em> untuk pertama kalinya. " +
-            "Halamannya kosong — hanya debu dan satu kalimat samar: " +
-            "<em>\"Semua bermula dari tanah.\"</em><br><br>" +
-            "Cahaya keemasan menyala di sebelahmu. Arunika muncul, wajahnya gelisah.<br><br>" +
-            "<strong>\"Penjelajah, pecahan pertama hilang. Kita harus ke Sangiran — " +
-            "kira-kira satu juta tahun ke belakang.\"</strong>"
-        },
-
-        /* --- 2. Dialog Arunika --- */
-        {
-          t: "dialog",
-          npc: "Arunika",
-          emoji: "✨",
-          teks:
-            "Kamu akan berdiri di lapisan tanah yang berumur ratusan ribu tahun. " +
-            "Ingat: <strong>jangan sentuh apa pun sebelum kamu memahaminya.</strong> " +
-            "Sejarah tidak suka tangan yang tergesa-gesa."
-        },
-
-        /* --- 3. Eksplorasi --- */
-        {
-          t: "eksplor",
-          latar: "assets/img/era-01/bab1-eksplor.jpg",
-          instruksi:
-            "Kamu berada di dasar lapisan tanah Sangiran. Periksa setiap lapisan " +
-            "untuk menemukan jejak yang ditinggalkan.",
-          hotspot: [
-            {
-              x: 24, y: 62,
-              judul: "Lapisan Tanah Hitam",
-              teks:
-                "Lapisan ini disebut <strong>lapisan lempung hitam</strong> dari zaman Pleistosen. " +
-                "Umurnya sekitar 1,5 juta tahun. Di sinilah banyak fosil ditemukan.",
-              efek: { kodeks: ["pleistosen"], poin: 10 }
-            },
-            {
-              x: 55, y: 40,
-              judul: "Fragmen Tengkorak",
-              teks:
-                "Sebuah atap tengkorak dengan tonjolan kening tebal. Ini ciri " +
-                "<strong>Pithecanthropus erectus</strong> — ditemukan Eugene Dubois " +
-                "di Trinil (1891), lalu fosil serupa muncul di Sangiran.",
-              efek: { kodeks: ["pithecanthropus"], poin: 15 }
-            },
-            {
-              x: 76, y: 72,
-              judul: "Alat dari Batu",
-              teks:
-                "Sebuah batu pecah dengan sisi tajam. Ini <strong>kapak genggam</strong> — " +
-                "alat serbaguna manusia purba untuk memotong, menguliti, dan menggali.",
-              efek: { kodeks: ["kapak-genggam"], poin: 15 }
-            }
-          ]
-        },
-
-        /* --- 4. Kuis --- */
-        {
-          t: "kuis",
-          pertanyaan:
-            "Mengapa Sangiran sangat penting bagi ilmu pengetahuan dunia?",
-          opsi: [
-            "Karena letaknya dekat dengan ibu kota provinsi.",
-            "Karena menjadi salah satu situs penemuan fosil manusia purba terbanyak di dunia.",
-            "Karena di sana ditemukan emas dan perak.",
-            "Karena Sangiran adalah bekas kerajaan besar."
-          ],
-          jawaban: 1,
-          penjelasan:
-            "Benar. Sangiran diakui UNESCO sebagai <em>World Heritage Site</em> (1996) " +
-            "karena menyimpan lebih dari 100 fosil manusia purba dari berbagai lapisan zaman — " +
-            "menjadikannya salah satu situs kunci dalam studi evolusi manusia.",
-          efek: { kodeks: ["sangiran"] }
-        },
-
-        /* --- 5. Pilihan (dilema) --- */
-        {
-          t: "pilihan",
-          teks:
-            "Seorang penduduk desa menemukan fosil tak biasa di kebunnya. " +
-            "Ia bingung harus berbuat apa. Apa yang akan kamu sarankan?",
-          opsi: [
-            {
-              teks: "Menyarankan melaporkan ke Balai Pelestarian Situs Manusia Purba.",
-              benar: true,
-              umpanBalik:
-                "Tepat. Fosil harus diteliti di laboratorium agar umur dan jenisnya bisa " +
-                "diketahui secara ilmiah. Ini yang terjadi pada temuan-temuan besar di Sangiran.",
-              efek: { poin: 20, empati: 5, flag: ["menghargai-situs"] }
-            },
-            {
-              teks: "Menyarankan menyimpannya sendiri sebagai koleksi pribadi.",
-              benar: false,
-              umpanBalik:
-                "Anomali terdeteksi. Fosil tanpa konteks lapisan tanahnya kehilangan sebagian besar " +
-                "nilai ilmiahnya. Selain itu, situs purbakala dilindungi undang-undang."
-            },
-            {
-              teks: "Menyarankan menjualnya ke kolektor.",
-              benar: false,
-              umpanBalik:
-                "Anomali terdeteksi. Ini tindakan ilegal dan merusak warisan bersama."
-            }
-          ]
-        },
-
-        /* --- 6. Refleksi --- */
-        {
-          t: "refleksi",
-          pertanyaan:
-            "Bayangkan kamu hidup 500.000 tahun lalu. Apa satu hal paling sulit dalam hidupmu, " +
-            "dan apa yang paling kamu syukuri?",
-          minKarakter: 60,
-          respons:
-            "Terima kasih. Memahami kesulitan orang lain di masa lalu adalah langkah pertama " +
-            "untuk memahami sejarah."
-        },
-
-        /* --- 7. Tutup Bab --- */
-        {
-          t: "tutup",
-          judul: "Jejak di Tepi Sungai",
-          teks:
-            "Pecahan pertama bersinar di tanganmu. Arunika mengangguk. " +
-            "<em>\"Satu langkah selesai. Tapi masih ada sembilan zaman menanti.\"</em>",
-          efek: { poin: 25 }
+      btnMulai.textContent = "▶ Main Baru";
+      btnMulai.onclick = function (e) {
+        if (!confirm("Memulai permainan baru akan menghapus seluruh progres yang tersimpan. Lanjutkan?")) {
+          e.preventDefault();
+        } else {
+          JN.reset();
         }
-      ]
-    }
+      };
 
-    /* Bab 2, 3, 4 akan ditambahkan nanti setelah Bab 1 berhasil diuji */
-  ]
-};
+      btnLanjut.classList.remove("tersembunyi");
+      const nama = (s.pemain && s.pemain.nama) ? s.pemain.nama : "Penjelajah";
+      const avatar = (s.pemain && s.pemain.avatar) ? s.pemain.avatar : "🧭";
+      btnLanjut.textContent = "↻ Lanjutkan — " + avatar + " " + nama;
+    }
+  } catch (err) {
+    console.warn("Tidak bisa memuat save:", err);
+  }
+
+  /* ---------- Render kartu 10 zaman dari manifest ---------- */
+  const wadah = document.getElementById("daftar-era");
+
+  if (wadah && Array.isArray(window.ERA_MANIFEST)) {
+    window.ERA_MANIFEST.forEach(function (era) {
+      const kartu = document.createElement("article");
+      kartu.className = "kartu-era reveal";
+      kartu.setAttribute("role", "listitem");
+      kartu.style.setProperty("--warna", era.warna || "#c9a227");
+
+      kartu.innerHTML =
+        '<div class="ikon-era" aria-hidden="true">' + era.ikon + '</div>' +
+        '<div style="min-width: 0">' +
+          '<div class="periode">' + era.periode + '</div>' +
+          '<h3>' + era.no + '. ' + era.judul + '</h3>' +
+          '<p>' + era.ringkas + '</p>' +
+        '</div>' +
+        '<span class="nomor-era" aria-hidden="true">' +
+          (era.no < 10 ? "0" + era.no : era.no) +
+        '</span>';
+
+      wadah.appendChild(kartu);
+    });
+  } else {
+    /* Fallback jika manifest tidak termuat */
+    wadah.innerHTML =
+      '<p class="teks-2 tengah" style="grid-column: 1/-1">' +
+        'Daftar zaman tidak dapat dimuat. Pastikan file ' +
+        '<code>assets/js/data/manifest.js</code> ada.' +
+      '</p>';
+  }
+
+  /* ---------- Scroll reveal (IntersectionObserver) ---------- */
+  const itemReveal = document.querySelectorAll(".reveal");
+
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("tampil");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+
+    itemReveal.forEach(function (el) { io.observe(el); });
+  } else {
+    /* Browser lama: tampilkan semua */
+    itemReveal.forEach(function (el) { el.classList.add("tampil"); });
+  }
+
+  /* ---------- Smooth scroll untuk anchor internal ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      const id = a.getAttribute("href");
+      if (id === "#" || id.length < 2) return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", id);
+    });
+  });
+
+  /* ---------- Sapa pengunjung baru (sekali per sesi) ---------- */
+  const sudahDisapa = sessionStorage.getItem("jsn_disapa");
+  if (!sudahDisapa && typeof JN !== "undefined") {
+    setTimeout(function () {
+      JN.toast(
+        "📜",
+        "Selamat datang, Penjelajah!",
+        "Tekan \"Mulai Petualangan\" untuk membuka Kronik Nusantara.",
+        5200
+      );
+      sessionStorage.setItem("jsn_disapa", "1");
+    }, 900);
+  }
+
+})();
+</script>
+
+</body>
+</html>

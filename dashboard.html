@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#08090c" />
+<meta name="theme-color" content="#060a18" />
 <title>Peta Kronik — Jejak Sejarah Nusantara</title>
 <meta name="description" content="Peta Kronik: pilih zaman petualanganmu dalam Jejak Sejarah Nusantara." />
 
@@ -17,21 +17,24 @@
 
 <style>
 :root {
-  --ln-bg-0: #08090c;
-  --ln-bg-1: #0d0f14;
-  --ln-bg-2: #131720;
-  --ln-bg-3: #1a1f2b;
-  --ln-ink: #eef0f4;
-  --ln-ink-2: #9ba3b4;
-  --ln-ink-3: #5a6073;
-  --ln-gold: #d4af37;
-  --ln-gold-2: #f7d97a;
-  --ln-gold-3: #a3801c;
-  --ln-teal: #4fd1c5;
-  --ln-rose: #e85a71;
-  --ln-violet: #8b5cf6;
-  --ln-amber: #f59e0b;
-  --ln-green: #22c55e;
+  --ln-bg-0: #060a18;
+  --ln-bg-1: #0a1128;
+  --ln-bg-2: #0f1a3a;
+  --ln-bg-3: #16244f;
+  --ln-ink: #e8efff;
+  --ln-ink-2: #94a3c8;
+  --ln-ink-3: #556690;
+  /* Biru (aksen utama) */
+  --ln-gold: #3b82f6;
+  --ln-gold-2: #93c5fd;
+  --ln-gold-3: #1e40af;
+  /* Aksen pendukung (5 warna serasi) */
+  --ln-teal: #22d3ee;   /* cyan */
+  --ln-rose: #818cf8;   /* indigo */
+  --ln-violet: #a78bfa; /* violet */
+  --ln-amber: #34d399;  /* emerald */
+  --ln-sky: #38bdf8;    /* sky */
+  --ln-green: #22c55e;  /* status selesai */
   --ln-line: rgba(255,255,255,.07);
   --ln-line-2: rgba(255,255,255,.12);
   --ln-glass: rgba(255,255,255,.03);
@@ -62,17 +65,16 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   position: relative;
+  cursor: auto;
 }
 
 body.no-scroll { overflow: hidden; }
-body.cursor-aktif .cursor-dot,
-body.cursor-aktif .cursor-ring { opacity: 1; }
 
 img { max-width: 100%; display: block; }
 button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
-a { color: inherit; text-decoration: none; }
+a { color: inherit; text-decoration: none; cursor: pointer; }
 
-::selection { background: var(--ln-gold); color: #1a1500; }
+::selection { background: var(--ln-gold); color: #041428; }
 
 /* LOADER */
 #loader {
@@ -105,22 +107,6 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: .3em; text-transform: uppercase; color: var(--ln-ink-3);
 }
 
-/* CURSOR */
-.cursor-dot, .cursor-ring {
-  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
-  border-radius: 50%; transform: translate(-50%, -50%); opacity: 0;
-  transition: opacity .3s ease; mix-blend-mode: difference;
-}
-.cursor-dot { width: 6px; height: 6px; background: var(--ln-gold); transition: opacity .3s ease, transform .12s ease; }
-.cursor-ring {
-  width: 34px; height: 34px; border: 1.5px solid var(--ln-gold);
-  transition: opacity .3s, transform .25s, width .3s, height .3s, border-color .3s;
-}
-.cursor-ring.hover { width: 56px; height: 56px; border-color: var(--ln-teal); background: rgba(79,209,197,.08); }
-@media (hover: none), (max-width: 900px) {
-  .cursor-dot, .cursor-ring { display: none !important; }
-}
-
 /* SCROLL PROGRESS */
 #scroll-progress {
   position: fixed; top: 0; left: 0; height: 2px; width: 0%;
@@ -145,7 +131,7 @@ body::after {
   border-bottom: 1px solid transparent;
 }
 .nav.scrolled {
-  background: rgba(8,9,12,.72);
+  background: rgba(6,10,24,.72);
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
   border-bottom-color: var(--ln-line);
@@ -161,14 +147,14 @@ body::after {
 .nav-logo-ikon {
   width: 38px; height: 38px; display: grid; place-items: center;
   font-size: 1.15rem; border-radius: 12px;
-  background: linear-gradient(135deg, rgba(212,175,55,.2), rgba(212,175,55,.05));
-  border: 1px solid rgba(212,175,55,.35);
+  background: linear-gradient(135deg, rgba(59,130,246,.25), rgba(59,130,246,.06));
+  border: 1px solid rgba(59,130,246,.4);
 }
 .nav-logo-teks { display: flex; flex-direction: column; line-height: 1.1; }
 .nav-logo-teks strong { font-family: var(--ln-font-display); font-size: 1rem; letter-spacing: -.02em; }
 .nav-logo-teks small {
   font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--ln-gold); font-weight: 600; margin-top: 2px;
+  color: var(--ln-gold-2); font-weight: 600; margin-top: 2px;
 }
 .nav-aksi { display: flex; align-items: center; gap: 6px; }
 .nav-ikon-btn {
@@ -178,13 +164,13 @@ body::after {
   transition: all .25s ease; position: relative;
 }
 .nav-ikon-btn:hover {
-  background: var(--ln-glass-2); border-color: var(--ln-gold);
+  background: var(--ln-glass-2); border-color: var(--ln-gold-2);
   color: var(--ln-gold-2); transform: translateY(-2px);
 }
 .nav-ikon-btn .badge {
   position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px;
   padding: 0 5px; border-radius: 100px;
-  background: var(--ln-gold); color: #1a1500;
+  background: var(--ln-gold); color: #041428;
   font-family: var(--ln-font-mono); font-size: .62rem; font-weight: 700;
   display: grid; place-items: center; border: 2px solid var(--ln-bg-0);
 }
@@ -199,8 +185,8 @@ body::after {
 .dash-header::before {
   content: ""; position: absolute; top: 0; left: 0; right: 0; height: 480px;
   background:
-    radial-gradient(ellipse 50% 60% at 20% 0%, rgba(212,175,55,.15), transparent 60%),
-    radial-gradient(ellipse 40% 50% at 80% 10%, rgba(79,209,197,.08), transparent 60%);
+    radial-gradient(ellipse 50% 60% at 20% 0%, rgba(59,130,246,.18), transparent 60%),
+    radial-gradient(ellipse 40% 50% at 80% 10%, rgba(34,211,238,.12), transparent 60%);
   filter: blur(50px); pointer-events: none; z-index: 0;
 }
 
@@ -214,13 +200,13 @@ body::after {
   display: inline-flex; align-items: center; gap: 10px;
   font-family: var(--ln-font-mono); font-size: .68rem;
   letter-spacing: .28em; text-transform: uppercase;
-  color: var(--ln-gold); font-weight: 500;
+  color: var(--ln-gold-2); font-weight: 500;
   padding: 6px 14px; border-radius: 100px;
-  background: rgba(212,175,55,.06); border: 1px solid rgba(212,175,55,.2);
+  background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.25);
 }
 .eyebrow::before {
-  content: ""; width: 5px; height: 5px; background: var(--ln-gold);
-  border-radius: 50%; box-shadow: 0 0 10px var(--ln-gold);
+  content: ""; width: 5px; height: 5px; background: var(--ln-gold-2);
+  border-radius: 50%; box-shadow: 0 0 10px var(--ln-gold-2);
   animation: titikDenyut 2s ease-in-out infinite;
 }
 @keyframes titikDenyut {
@@ -236,7 +222,7 @@ body::after {
 }
 .sapaan h1 em {
   font-style: italic;
-  background: linear-gradient(180deg, var(--ln-gold-2), var(--ln-gold-3));
+  background: linear-gradient(180deg, var(--ln-gold-2), var(--ln-gold));
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .sapaan p { max-width: 520px; font-size: .98rem; line-height: 1.7; color: var(--ln-ink-2); margin: 0; }
@@ -244,19 +230,19 @@ body::after {
 .sapaan-kanan {
   display: flex; align-items: center; gap: 12px; padding: 14px 18px;
   border-radius: var(--ln-r);
-  background: linear-gradient(160deg, rgba(19,23,32,.85), rgba(13,15,20,.95));
+  background: linear-gradient(160deg, rgba(15,26,58,.85), rgba(10,17,40,.95));
   border: 1px solid var(--ln-line); backdrop-filter: blur(20px);
   transition: all .3s ease;
 }
 .sapaan-kanan:hover {
-  border-color: rgba(212,175,55,.35); transform: translateY(-2px);
+  border-color: rgba(59,130,246,.4); transform: translateY(-2px);
   box-shadow: 0 14px 40px -12px rgba(0,0,0,.7);
 }
 .avatar {
   width: 54px; height: 54px; border-radius: 50%;
   display: grid; place-items: center; font-size: 1.6rem;
-  background: linear-gradient(135deg, rgba(212,175,55,.25), rgba(212,175,55,.05));
-  border: 1.5px solid rgba(212,175,55,.4);
+  background: linear-gradient(135deg, rgba(59,130,246,.28), rgba(59,130,246,.06));
+  border: 1.5px solid rgba(59,130,246,.45);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
   position: relative; overflow: hidden;
 }
@@ -274,7 +260,7 @@ body::after {
 .avatar-info .nama { font-weight: 700; font-size: .98rem; letter-spacing: -.01em; }
 .avatar-info .status {
   font-family: var(--ln-font-mono); font-size: .68rem;
-  letter-spacing: .15em; text-transform: uppercase; color: var(--ln-gold);
+  letter-spacing: .15em; text-transform: uppercase; color: var(--ln-gold-2);
 }
 @media (max-width: 640px) { .sapaan-kanan { width: 100%; } }
 
@@ -289,21 +275,21 @@ body::after {
 .stat-card {
   position: relative; padding: 22px 22px 20px;
   border-radius: var(--ln-r);
-  background: linear-gradient(160deg, rgba(19,23,32,.85), rgba(13,15,20,.95));
+  background: linear-gradient(160deg, rgba(15,26,58,.85), rgba(10,17,40,.95));
   border: 1px solid var(--ln-line); overflow: hidden;
   transition: all .35s cubic-bezier(.4,0,.2,1);
 }
 .stat-card::before {
   content: ""; position: absolute; inset: 0;
-  background: radial-gradient(circle at 100% 0%, var(--stat-warna, #d4af37), transparent 50%);
+  background: radial-gradient(circle at 100% 0%, var(--stat-warna, #3b82f6), transparent 50%);
   opacity: 0; transition: opacity .4s ease;
   pointer-events: none; mix-blend-mode: soft-light;
 }
 .stat-card:hover {
-  transform: translateY(-4px); border-color: var(--stat-warna, #d4af37);
+  transform: translateY(-4px); border-color: var(--stat-warna, #3b82f6);
   box-shadow: 0 16px 40px -12px rgba(0,0,0,.7);
 }
-.stat-card:hover::before { opacity: .25; }
+.stat-card:hover::before { opacity: .3; }
 
 .stat-ikon {
   width: 40px; height: 40px; border-radius: 12px;
@@ -313,8 +299,8 @@ body::after {
   transition: all .35s ease;
 }
 .stat-card:hover .stat-ikon {
-  border-color: var(--stat-warna, #d4af37);
-  box-shadow: 0 0 20px -4px var(--stat-warna, #d4af37);
+  border-color: var(--stat-warna, #3b82f6);
+  box-shadow: 0 0 20px -4px var(--stat-warna, #3b82f6);
   transform: rotate(-6deg);
 }
 .stat-label {
@@ -338,8 +324,8 @@ body::after {
   position: relative; padding: 28px 28px 24px;
   border-radius: var(--ln-r-lg);
   background:
-    radial-gradient(circle at 0% 0%, rgba(212,175,55,.08), transparent 50%),
-    linear-gradient(160deg, rgba(19,23,32,.85), rgba(13,15,20,.95));
+    radial-gradient(circle at 0% 0%, rgba(59,130,246,.12), transparent 50%),
+    linear-gradient(160deg, rgba(15,26,58,.85), rgba(10,17,40,.95));
   border: 1px solid var(--ln-line); overflow: hidden;
   margin-bottom: 48px; z-index: 1;
 }
@@ -351,8 +337,8 @@ body::after {
 .progress-judul .ikon {
   width: 40px; height: 40px; border-radius: 12px;
   display: grid; place-items: center; font-size: 1.1rem;
-  background: linear-gradient(135deg, rgba(212,175,55,.2), rgba(212,175,55,.04));
-  border: 1px solid rgba(212,175,55,.3);
+  background: linear-gradient(135deg, rgba(59,130,246,.25), rgba(59,130,246,.05));
+  border: 1px solid rgba(59,130,246,.35);
 }
 .progress-judul h2 {
   font-family: var(--ln-font-display); font-size: 1.15rem;
@@ -366,7 +352,7 @@ body::after {
 .progress-persen {
   font-family: var(--ln-font-display); font-size: 2.2rem;
   font-weight: 800; line-height: 1; letter-spacing: -.03em;
-  background: linear-gradient(180deg, var(--ln-gold-2), var(--ln-gold-3));
+  background: linear-gradient(180deg, var(--ln-gold-2), var(--ln-gold));
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .progress-track {
@@ -377,7 +363,7 @@ body::after {
 .progress-isi {
   height: 100%; width: 0%; border-radius: 100px;
   background: linear-gradient(90deg, var(--ln-gold), var(--ln-gold-2), var(--ln-teal));
-  box-shadow: 0 0 20px rgba(212,175,55,.5);
+  box-shadow: 0 0 20px rgba(59,130,246,.6);
   transition: width 1.4s cubic-bezier(.22,1,.36,1);
   position: relative;
 }
@@ -424,7 +410,7 @@ body::after {
 .filter-tab:hover { color: var(--ln-ink); }
 .filter-tab.aktif {
   background: linear-gradient(135deg, var(--ln-gold), var(--ln-gold-2));
-  color: #1a1500; box-shadow: 0 4px 14px -4px rgba(212,175,55,.5);
+  color: #041428; box-shadow: 0 4px 14px -4px rgba(59,130,246,.6);
 }
 .filter-tab .jml {
   font-family: var(--ln-font-mono); font-size: .7rem;
@@ -441,22 +427,22 @@ body::after {
 .era-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 60px; }
 .era-card {
   position: relative; border-radius: var(--ln-r-lg);
-  background: linear-gradient(160deg, rgba(19,23,32,.85), rgba(13,15,20,.95));
+  background: linear-gradient(160deg, rgba(15,26,58,.85), rgba(10,17,40,.95));
   border: 1px solid var(--ln-line); overflow: hidden;
   transition: all .4s cubic-bezier(.4,0,.2,1); z-index: 1;
 }
 .era-card::before {
   content: ""; position: absolute; inset: 0;
-  background: radial-gradient(circle at 0% 50%, var(--era-warna, #d4af37), transparent 55%);
+  background: radial-gradient(circle at 0% 50%, var(--era-warna, #3b82f6), transparent 55%);
   opacity: 0; transition: opacity .5s ease;
   mix-blend-mode: soft-light; pointer-events: none;
 }
 .era-card:not(.terkunci):hover {
-  border-color: var(--era-warna, #d4af37);
+  border-color: var(--era-warna, #3b82f6);
   transform: translateY(-3px);
   box-shadow: 0 24px 60px -20px rgba(0,0,0,.8);
 }
-.era-card:not(.terkunci):hover::before { opacity: .18; }
+.era-card:not(.terkunci):hover::before { opacity: .22; }
 .era-card.selesai { border-color: rgba(34,197,94,.35); }
 .era-card.terkunci { opacity: .55; filter: grayscale(.5); }
 
@@ -483,8 +469,8 @@ body::after {
 }
 .era-card:not(.terkunci):hover .era-medali::after { transform: translateX(100%); }
 .era-card:not(.terkunci) .era-medali {
-  border-color: var(--era-warna, #d4af37);
-  box-shadow: 0 0 28px -6px var(--era-warna, #d4af37);
+  border-color: var(--era-warna, #3b82f6);
+  box-shadow: 0 0 28px -6px var(--era-warna, #3b82f6);
 }
 .era-card.selesai .era-medali {
   border-color: var(--ln-green);
@@ -499,7 +485,7 @@ body::after {
 .era-no {
   font-family: var(--ln-font-mono); font-size: .68rem;
   letter-spacing: .2em; text-transform: uppercase;
-  color: var(--era-warna, #d4af37); font-weight: 600;
+  color: var(--era-warna, #93c5fd); font-weight: 600;
 }
 .era-periode {
   font-family: var(--ln-font-mono); font-size: .68rem;
@@ -513,12 +499,12 @@ body::after {
   padding: 3px 10px; border-radius: 100px;
 }
 .era-badge.baru {
-  background: rgba(212,175,55,.15); color: var(--ln-gold-2);
-  border: 1px solid rgba(212,175,55,.4);
+  background: rgba(59,130,246,.15); color: var(--ln-gold-2);
+  border: 1px solid rgba(59,130,246,.4);
 }
 .era-badge.baru::before {
-  content: ""; width: 5px; height: 5px; background: var(--ln-gold);
-  border-radius: 50%; box-shadow: 0 0 8px var(--ln-gold);
+  content: ""; width: 5px; height: 5px; background: var(--ln-gold-2);
+  border-radius: 50%; box-shadow: 0 0 8px var(--ln-gold-2);
   animation: titikDenyut 1.6s ease-in-out infinite;
 }
 .era-badge.selesai {
@@ -565,8 +551,8 @@ body::after {
 }
 .era-card.buka .era-chevron {
   transform: rotate(180deg);
-  border-color: var(--era-warna, #d4af37);
-  color: var(--era-warna, #d4af37);
+  border-color: var(--era-warna, #3b82f6);
+  color: var(--era-warna, #3b82f6);
 }
 @media (max-width: 780px) {
   .era-header { grid-template-columns: auto 1fr; padding: 20px; gap: 16px; }
@@ -603,7 +589,7 @@ body::after {
 }
 .bab-item:hover:not(.terkunci) {
   background: rgba(255,255,255,.05);
-  border-color: var(--era-warna, #d4af37);
+  border-color: var(--era-warna, #3b82f6);
   transform: translateX(6px);
 }
 .bab-item.terkunci { opacity: .45; cursor: not-allowed; }
@@ -622,8 +608,8 @@ body::after {
 }
 .bab-item.sekarang .bab-check {
   background: linear-gradient(135deg, var(--ln-gold), var(--ln-gold-2));
-  border-color: var(--ln-gold); color: #1a1500;
-  box-shadow: 0 0 20px -2px rgba(212,175,55,.7);
+  border-color: var(--ln-gold); color: #041428;
+  box-shadow: 0 0 20px -2px rgba(59,130,246,.8);
   animation: babPulse 2s ease-in-out infinite;
 }
 @keyframes babPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
@@ -650,8 +636,8 @@ body::after {
   color: var(--ln-ink-2); transition: all .3s ease;
 }
 .bab-item:hover:not(.terkunci) .bab-arrow {
-  background: var(--era-warna, #d4af37);
-  border-color: var(--era-warna, #d4af37); color: #0d0f14;
+  background: var(--era-warna, #3b82f6);
+  border-color: var(--era-warna, #3b82f6); color: #041428;
 }
 @media (max-width: 640px) {
   .era-bab-inner { padding: 16px; }
@@ -670,7 +656,7 @@ body::after {
 .aksi-card {
   display: flex; flex-direction: column; align-items: flex-start;
   padding: 22px; border-radius: var(--ln-r);
-  background: linear-gradient(160deg, rgba(19,23,32,.7), rgba(13,15,20,.9));
+  background: linear-gradient(160deg, rgba(15,26,58,.7), rgba(10,17,40,.9));
   border: 1px solid var(--ln-line);
   transition: all .35s cubic-bezier(.4,0,.2,1);
   text-decoration: none; color: inherit;
@@ -678,13 +664,13 @@ body::after {
 }
 .aksi-card::before {
   content: ""; position: absolute; inset: 0;
-  background: radial-gradient(circle at 100% 0%, var(--aksi-warna, #d4af37), transparent 55%);
+  background: radial-gradient(circle at 100% 0%, var(--aksi-warna, #3b82f6), transparent 55%);
   opacity: 0; transition: opacity .4s ease;
   mix-blend-mode: soft-light; pointer-events: none;
 }
 .aksi-card:hover {
   transform: translateY(-5px);
-  border-color: var(--aksi-warna, #d4af37);
+  border-color: var(--aksi-warna, #3b82f6);
   box-shadow: 0 20px 50px -15px rgba(0,0,0,.8);
 }
 .aksi-card:hover::before { opacity: .3; }
@@ -696,8 +682,8 @@ body::after {
   transition: all .35s ease;
 }
 .aksi-card:hover .aksi-ikon {
-  border-color: var(--aksi-warna, #d4af37);
-  box-shadow: 0 0 24px -6px var(--aksi-warna, #d4af37);
+  border-color: var(--aksi-warna, #3b82f6);
+  box-shadow: 0 0 24px -6px var(--aksi-warna, #3b82f6);
   transform: rotate(-8deg) scale(1.05);
 }
 .aksi-card h3 {
@@ -712,17 +698,17 @@ body::after {
   display: flex; align-items: center; gap: 12px;
   padding: 14px 24px 14px 18px; border-radius: 100px;
   background: linear-gradient(135deg, var(--ln-gold), var(--ln-gold-2));
-  color: #1a1500; font-weight: 700; font-size: .9rem;
+  color: #041428; font-weight: 700; font-size: .9rem;
   letter-spacing: .01em;
-  box-shadow: 0 20px 50px -12px rgba(212,175,55,.7), 0 0 0 0 rgba(212,175,55,.5);
+  box-shadow: 0 20px 50px -12px rgba(59,130,246,.75), 0 0 0 0 rgba(59,130,246,.5);
   transition: all .35s cubic-bezier(.4,0,.2,1);
   text-decoration: none;
   animation: floatPulse 3s ease-in-out infinite;
   overflow: hidden;
 }
 @keyframes floatPulse {
-  0%,100% { box-shadow: 0 20px 50px -12px rgba(212,175,55,.7), 0 0 0 0 rgba(212,175,55,.5); }
-  50% { box-shadow: 0 20px 50px -12px rgba(212,175,55,.9), 0 0 0 12px rgba(212,175,55,0); }
+  0%,100% { box-shadow: 0 20px 50px -12px rgba(59,130,246,.75), 0 0 0 0 rgba(59,130,246,.5); }
+  50% { box-shadow: 0 20px 50px -12px rgba(59,130,246,.95), 0 0 0 12px rgba(59,130,246,0); }
 }
 .btn-lanjut-float:hover { transform: translateY(-3px) scale(1.03); }
 .btn-lanjut-float::before {
@@ -806,8 +792,6 @@ body::after {
 </div>
 
 <div id="scroll-progress" aria-hidden="true"></div>
-<div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
-<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 <canvas id="partikel" aria-hidden="true"></canvas>
 
 <nav class="nav" id="nav" aria-label="Navigasi dashboard">
@@ -851,25 +835,25 @@ body::after {
     </div>
 
     <div class="stat-grid">
-      <div class="stat-card reveal d1" style="--stat-warna:#d4af37">
+      <div class="stat-card reveal d1" style="--stat-warna:#3b82f6">
         <div class="stat-ikon" aria-hidden="true">🪙</div>
         <div class="stat-label">Poin Kronik</div>
         <div class="stat-nilai" id="stat-poin">0</div>
         <div class="stat-sub">Total sepanjang perjalanan</div>
       </div>
-      <div class="stat-card reveal d2" style="--stat-warna:#4fd1c5">
+      <div class="stat-card reveal d2" style="--stat-warna:#22d3ee">
         <div class="stat-ikon" aria-hidden="true">🎯</div>
         <div class="stat-label">Akurasi</div>
         <div class="stat-nilai"><span id="stat-akurasi">0</span><small>%</small></div>
         <div class="stat-sub" id="stat-akurasi-detail">0 dari 0 soal</div>
       </div>
-      <div class="stat-card reveal d3" style="--stat-warna:#8b5cf6">
+      <div class="stat-card reveal d3" style="--stat-warna:#a78bfa">
         <div class="stat-ikon" aria-hidden="true">📖</div>
         <div class="stat-label">Kodeks</div>
         <div class="stat-nilai" id="stat-kodeks">0</div>
         <div class="stat-sub">Entri terbuka</div>
       </div>
-      <div class="stat-card reveal d4" style="--stat-warna:#e85a71">
+      <div class="stat-card reveal d4" style="--stat-warna:#818cf8">
         <div class="stat-ikon" aria-hidden="true">✍️</div>
         <div class="stat-label">Refleksi</div>
         <div class="stat-nilai" id="stat-jurnal">0</div>
@@ -916,22 +900,22 @@ body::after {
   <div class="era-list" id="era-list"></div>
 
   <div class="aksi-cepat">
-    <a class="aksi-card reveal d1" href="kodeks.html" style="--aksi-warna:#4fd1c5">
+    <a class="aksi-card reveal d1" href="kodeks.html" style="--aksi-warna:#22d3ee">
       <div class="aksi-ikon" aria-hidden="true">📖</div>
       <h3>Kodeks</h3>
       <p>Ensiklopedia tokoh, tempat, dan istilah sejarah yang telah kamu temui.</p>
     </a>
-    <a class="aksi-card reveal d2" href="jurnal.html" style="--aksi-warna:#8b5cf6">
+    <a class="aksi-card reveal d2" href="jurnal.html" style="--aksi-warna:#a78bfa">
       <div class="aksi-ikon" aria-hidden="true">✍️</div>
       <h3>Jurnal Refleksi</h3>
       <p>Kumpulan tulisan pendapatmu di setiap bab yang telah diselesaikan.</p>
     </a>
-    <a class="aksi-card reveal d3" href="rapor.html" style="--aksi-warna:#d4af37">
+    <a class="aksi-card reveal d3" href="rapor.html" style="--aksi-warna:#3b82f6">
       <div class="aksi-ikon" aria-hidden="true">📊</div>
       <h3>Rapor Petualangan</h3>
       <p>Nilai, akurasi, dan capaianmu. Bisa dicetak untuk gurumu.</p>
     </a>
-    <a class="aksi-card reveal d4" href="pengaturan.html" style="--aksi-warna:#e85a71">
+    <a class="aksi-card reveal d4" href="pengaturan.html" style="--aksi-warna:#818cf8">
       <div class="aksi-ikon" aria-hidden="true">⚙️</div>
       <h3>Pengaturan</h3>
       <p>Atur nama, ukuran teks, musik, dan kelola data permainanmu.</p>
@@ -957,30 +941,30 @@ body::after {
 </footer>
 
 <script>
-/* FALLBACK MANIFEST */
+/* FALLBACK MANIFEST — palet biru + 5 aksen serasi */
 if (!window.ERA_MANIFEST) {
   window.ERA_MANIFEST = [
-    { id:"era01", no:1, judul:"Pra Sejarah", periode:"± 1 Juta SM – 300 M", ikon:"🪨", warna:"#8a7a5c", ringkas:"Dari manusia purba di Sangiran hingga tradisi megalitik.", folder:"era/01-prasejarah/", bab:[
+    { id:"era01", no:1, judul:"Pra Sejarah", periode:"± 1 Juta SM – 300 M", ikon:"🪨", warna:"#60a5fa", ringkas:"Dari manusia purba di Sangiran hingga tradisi megalitik.", folder:"era/01-prasejarah/", bab:[
       {id:"bab1",file:"bab-1.html",judul:"Jejak di Tepi Sungai"},
       {id:"bab2",file:"bab-2.html",judul:"Pesta Kerang di Pantai Timur"},
       {id:"bab3",file:"bab-3.html",judul:"Dinding yang Bercerita"},
       {id:"bab4",file:"bab-4.html",judul:"Batu yang Menatap Langit"}
     ]},
-    { id:"era02", no:2, judul:"Hindu–Buddha", periode:"400 – 1500 M", ikon:"🛕", warna:"#c9a227", ringkas:"Kutai, Sriwijaya, Mataram Kuno, dan kejayaan Majapahit.", folder:"era/02-hindu-buddha/", bab:[
+    { id:"era02", no:2, judul:"Hindu–Buddha", periode:"400 – 1500 M", ikon:"🛕", warna:"#3b82f6", ringkas:"Kutai, Sriwijaya, Mataram Kuno, dan kejayaan Majapahit.", folder:"era/02-hindu-buddha/", bab:[
       {id:"bab1",file:"bab-1.html",judul:"Tujuh Tiang Bertulis"},
       {id:"bab2",file:"bab-2.html",judul:"Kota Seribu Sungai"},
       {id:"bab3",file:"bab-3.html",judul:"Batu di Tengah Sawah"},
       {id:"bab4",file:"bab-4.html",judul:"Candi untuk Para Dewa"},
       {id:"bab5",file:"bab-5.html",judul:"Sumpah di Bawah Pohon"}
     ]},
-    { id:"era03", no:3, judul:"Masa Islam", periode:"1200 – 1600 M", ikon:"🕌", warna:"#4fd1c5", ringkas:"Jalur dagang, kesultanan, dan dakwah Walisongo.", folder:"era/03-islam/", bab:[
+    { id:"era03", no:3, judul:"Masa Islam", periode:"1200 – 1600 M", ikon:"🕌", warna:"#22d3ee", ringkas:"Jalur dagang, kesultanan, dan dakwah Walisongo.", folder:"era/03-islam/", bab:[
       {id:"bab1",file:"bab-1.html",judul:"Kapal dari Negeri Jauh"},
       {id:"bab2",file:"bab-2.html",judul:"Batu Nisan Sultan"},
       {id:"bab3",file:"bab-3.html",judul:"Masjid Tanpa Kubah"},
       {id:"bab4",file:"bab-4.html",judul:"Sunan di Tepi Kali"},
       {id:"bab5",file:"bab-5.html",judul:"Pasar, Pesantren, dan Pesisir"}
     ]},
-    { id:"era04", no:4, judul:"Kolonialisme", periode:"1511 – 1908", ikon:"⛵", warna:"#e85a71", ringkas:"Portugis, VOC, Tanam Paksa, dan perlawanan daerah.", folder:"era/04-kolonial/", bab:[
+    { id:"era04", no:4, judul:"Kolonialisme", periode:"1511 – 1908", ikon:"⛵", warna:"#6366f1", ringkas:"Portugis, VOC, Tanam Paksa, dan perlawanan daerah.", folder:"era/04-kolonial/", bab:[
       {id:"bab1",file:"bab-1.html",judul:"Meriam di Selat Malaka"},
       {id:"bab2",file:"bab-2.html",judul:"Kantor Dagang di Jayakarta"},
       {id:"bab3",file:"bab-3.html",judul:"Surat untuk Gubernur Jenderal"},
@@ -988,40 +972,40 @@ if (!window.ERA_MANIFEST) {
       {id:"bab5",file:"bab-5.html",judul:"Perang di Tanah Jawa"},
       {id:"bab6",file:"bab-6.html",judul:"Serambi Mekah Melawan"}
     ]},
-    { id:"era05", no:5, judul:"Pergerakan Nasional", periode:"1908 – 1942", ikon:"📰", warna:"#5b8def", ringkas:"Kebangkitan organisasi, pendidikan, dan Sumpah Pemuda.", folder:"era/05-pergerakan/", bab:[
+    { id:"era05", no:5, judul:"Pergerakan Nasional", periode:"1908 – 1942", ikon:"📰", warna:"#a78bfa", ringkas:"Kebangkitan organisasi, pendidikan, dan Sumpah Pemuda.", folder:"era/05-pergerakan/", bab:[
       {id:"bab1",file:"bab-1.html",judul:"Dokter dari STOVIA"},
       {id:"bab2",file:"bab-2.html",judul:"Serikat yang Tumbuh"},
       {id:"bab3",file:"bab-3.html",judul:"Sekolah untuk Semua"},
       {id:"bab4",file:"bab-4.html",judul:"Satu Nusa, Satu Bangsa"},
       {id:"bab5",file:"bab-5.html",judul:"Suara dari Ruang Kelas"}
     ]},
-    { id:"era06", no:6, judul:"Proklamasi", periode:"1942 – 1945", ikon:"🎌", warna:"#ef4444", ringkas:"Pendudukan Jepang hingga detik-detik 17 Agustus 1945.", folder:"era/06-proklamasi/", bab:[
+    { id:"era06", no:6, judul:"Proklamasi", periode:"1942 – 1945", ikon:"🎌", warna:"#38bdf8", ringkas:"Pendudukan Jepang hingga detik-detik 17 Agustus 1945.", folder:"era/06-proklamasi/", bab:[
       {id:"bab1",file:"bab-1.html",judul:"Bayang-Bayang Matahari Terbit"},
       {id:"bab2",file:"bab-2.html",judul:"Rapat di Balik Pintu"},
       {id:"bab3",file:"bab-3.html",judul:"Malam di Rengasdengklok"},
       {id:"bab4",file:"bab-4.html",judul:"Pukul Sepuluh Pagi"}
     ]},
-    { id:"era07", no:7, judul:"Orde Lama", periode:"1945 – 1966", ikon:"🏛️", warna:"#f59e0b", ringkas:"Mempertahankan kemerdekaan hingga gejolak politik.", folder:"era/07-orde-lama/", bab:[
+    { id:"era07", no:7, judul:"Orde Lama", periode:"1945 – 1966", ikon:"🏛️", warna:"#60a5fa", ringkas:"Mempertahankan kemerdekaan hingga gejolak politik.", folder:"era/07-orde-lama/", bab:[
       {id:"bab1",file:"bab-1.html",judul:"Bambu Runcing dan Bedil"},
       {id:"bab2",file:"bab-2.html",judul:"Meja Bundar"},
       {id:"bab3",file:"bab-3.html",judul:"Pemilu Pertama"},
       {id:"bab4",file:"bab-4.html",judul:"Demokrasi Terpimpin"},
       {id:"bab5",file:"bab-5.html",judul:"Malam yang Panjang"}
     ]},
-    { id:"era08", no:8, judul:"Orde Baru", periode:"1966 – 1998", ikon:"🏗️", warna:"#84cc16", ringkas:"Pembangunan, stabilitas, dan batas-batas yang tak terlihat.", folder:"era/08-orde-baru/", bab:[
+    { id:"era08", no:8, judul:"Orde Baru", periode:"1966 – 1998", ikon:"🏗️", warna:"#22d3ee", ringkas:"Pembangunan, stabilitas, dan batas-batas yang tak terlihat.", folder:"era/08-orde-baru/", bab:[
       {id:"bab1",file:"bab-1.html",judul:"Surat Perintah"},
       {id:"bab2",file:"bab-2.html",judul:"Rencana Lima Tahun"},
       {id:"bab3",file:"bab-3.html",judul:"Lumbung yang Penuh"},
       {id:"bab4",file:"bab-4.html",judul:"Suara yang Dibungkam"},
       {id:"bab5",file:"bab-5.html",judul:"Rupiah yang Jatuh"}
     ]},
-    { id:"era09", no:9, judul:"Reformasi", periode:"1998 – 2004", ikon:"✊", warna:"#8b5cf6", ringkas:"Gelombang perubahan dan fondasi demokrasi baru.", folder:"era/09-reformasi/", bab:[
+    { id:"era09", no:9, judul:"Reformasi", periode:"1998 – 2004", ikon:"✊", warna:"#818cf8", ringkas:"Gelombang perubahan dan fondasi demokrasi baru.", folder:"era/09-reformasi/", bab:[
       {id:"bab1",file:"bab-1.html",judul:"Hujan di Bulan Mei"},
       {id:"bab2",file:"bab-2.html",judul:"Tangga Gedung Rakyat"},
       {id:"bab3",file:"bab-3.html",judul:"Menulis Ulang Hukum Dasar"},
       {id:"bab4",file:"bab-4.html",judul:"Kotak Suara Terbuka"}
     ]},
-    { id:"era10", no:10, judul:"Masa Kini", periode:"2004 – sekarang", ikon:"🌐", warna:"#06b6d4", ringkas:"Demokrasi digital, globalisasi, dan arah bangsa.", folder:"era/10-masa-kini/", bab:[
+    { id:"era10", no:10, judul:"Masa Kini", periode:"2004 – sekarang", ikon:"🌐", warna:"#a78bfa", ringkas:"Demokrasi digital, globalisasi, dan arah bangsa.", folder:"era/10-masa-kini/", bab:[
       {id:"bab1",file:"bab-1.html",judul:"Layar di Kantong"},
       {id:"bab2",file:"bab-2.html",judul:"Desa yang Terhubung"},
       {id:"bab3",file:"bab-3.html",judul:"Batik di Panggung Dunia"},
@@ -1044,27 +1028,6 @@ const kabur = (s) => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").
   }, 700);
 })();
 
-/* CURSOR */
-(function cursor(){
-  if (matchMedia("(hover: none)").matches) return;
-  const dot = $("#cursor-dot"), ring = $("#cursor-ring");
-  let mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
-  document.addEventListener("mousemove", e => {
-    mx = e.clientX; my = e.clientY;
-    document.body.classList.add("cursor-aktif");
-    dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-  });
-  (function loop(){
-    rx += (mx-rx)*0.16; ry += (my-ry)*0.16;
-    ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-    requestAnimationFrame(loop);
-  })();
-  const hov = "a,button,.era-card,.bab-item,.stat-card,.aksi-card,.filter-tab";
-  document.addEventListener("mouseover", e => { if(e.target.closest(hov)) ring.classList.add("hover"); });
-  document.addEventListener("mouseout", e => { if(e.target.closest(hov)) ring.classList.remove("hover"); });
-  document.addEventListener("mouseleave", () => document.body.classList.remove("cursor-aktif"));
-})();
-
 /* SCROLL UI */
 (function scrollUI(){
   const bar = $("#scroll-progress"), nav = $("#nav");
@@ -1078,7 +1041,7 @@ const kabur = (s) => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").
   upd();
 })();
 
-/* PARTIKEL */
+/* PARTIKEL — palet biru + 5 aksen serasi */
 (function partikel(){
   const cv = $("#partikel");
   if (!cv || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -1087,6 +1050,8 @@ const kabur = (s) => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").
   const N = innerWidth < 720 ? 24 : 50;
   function resize(){ W = cv.width = innerWidth; H = cv.height = innerHeight; }
   resize(); addEventListener("resize", resize);
+  /* Hues: biru(217), biru muda(213), cyan(190), indigo(235), violet(258) */
+  const HUES = [217, 213, 190, 235, 258];
   function buat(){
     return {
       x: Math.random()*W, y: Math.random()*H,
@@ -1095,7 +1060,7 @@ const kabur = (s) => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").
       vy: -Math.random()*0.22-0.05,
       a: Math.random()*Math.PI*2,
       va: (Math.random()-.5)*0.02,
-      hue: Math.random()>.55 ? 45 : 170
+      hue: HUES[Math.floor(Math.random()*HUES.length)]
     };
   }
   for (let i=0;i<N;i++) parts.push(buat());
@@ -1108,9 +1073,9 @@ const kabur = (s) => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").
       const al = 0.3 + Math.sin(p.a)*0.3;
       ctx.beginPath();
       ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle = `hsla(${p.hue},80%,65%,${al})`;
+      ctx.fillStyle = `hsla(${p.hue},85%,65%,${al})`;
       ctx.shadowBlur = 8;
-      ctx.shadowColor = `hsla(${p.hue},80%,60%,${al*0.8})`;
+      ctx.shadowColor = `hsla(${p.hue},85%,60%,${al*0.8})`;
       ctx.fill();
     });
     requestAnimationFrame(loop);
@@ -1239,7 +1204,7 @@ function renderEra(filter){
 
     const card = document.createElement("article");
     card.className = "era-card reveal" + (status === "terkunci" ? " terkunci" : "") + (status === "selesai" ? " selesai" : "");
-    card.style.setProperty("--era-warna", era.warna || "#d4af37");
+    card.style.setProperty("--era-warna", era.warna || "#3b82f6");
     card.dataset.eraId = era.id;
     card.style.transitionDelay = Math.min(idx * 0.05, 0.4) + "s";
 
